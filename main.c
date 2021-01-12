@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 15:12:26 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/10 15:17:03 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/01/12 17:29:54 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*read_line()
 	return (line);
 }
 
-int     main(int argc, char **argv)
+int     main(int argc, char **argv, char **env)
 {
 	char	*line;
 
@@ -44,7 +44,7 @@ int     main(int argc, char **argv)
 		if (ft_strcmp(line, "") != 0)
 		{
 			// Parsing
-
+			
 			// Executing
 			
 			printf("~ %s\n", line);

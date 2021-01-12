@@ -6,13 +6,13 @@
 #    By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/09 14:57:18 by iounejja          #+#    #+#              #
-#    Updated: 2021/01/10 15:02:34 by iounejja         ###   ########.fr        #
+#    Updated: 2021/01/12 17:31:32 by iounejja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 EXEC = minishell
 NAME = minishell.a
-SRCS = ft_strcmp.c
+SRCS = utils/ft_strcmp.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
@@ -26,6 +26,7 @@ $(NAME): $(OBJS)
 
 clean:
 	rm -rf *.o
+	rm -rf utils/*.o
 	cd utils/libft &&  make clean
 
 fclean: clean

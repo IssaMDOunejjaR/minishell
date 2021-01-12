@@ -1,29 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   executing.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/10 15:00:14 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/10 15:12:21 by iounejja         ###   ########.fr       */
+/*   Created: 2021/01/11 15:19:41 by iounejja          #+#    #+#             */
+/*   Updated: 2021/01/11 15:21:18 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef EXECUTING_H
+# define EXECUTING_H
 
-int     ft_strcmp(char *s1, char *s2)
-{
-    int i;
+# include "../minishell.h"
 
-    i = 0;
-    while (s1[i] != '\0')
-    {
-        if (s1[i] - s2[i] != 0)
-            return (s1[i] - s2[i]);
-        i++;
-    }
-    if(s1[i] - s2[i] != 0)
-        return (s1[i] - s2[i]);
-    return (0);
-}
+
+#endif
