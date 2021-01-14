@@ -6,12 +6,14 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 15:12:26 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/12 17:38:10 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/01/14 19:08:23 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
+
+extern char **environ;
 
 char	*read_line()
 {
@@ -34,22 +36,28 @@ char	*read_line()
 	return (line);
 }
 
-int     main(int argc, char **argv, char **env)
+int     main()
 {
-	char	*line;
+	// char	*line;
+	t_cmd	cmd;
+	
+	cmd.cmds = ft_lstnew("cat");
+	ft_lstadd_back(&cmd.cmds, ft_lstnew("-n"));
+	ft_lstadd_back(&cmd.cmds, ft_lstnew("hello"));
 
-	while (1)
-	{
-		write(1, "> ", 2);
-		line = read_line();
-		if (ft_strcmp(line, "") != 0)
-		{
-			// Parsing
+	check_command(&cmd, environ);
+	// while (1)
+	// {
+	// 	write(1, "\e[1;92m-> \e[1;96mminishell\e[1;91m /# \e[0m", 41);
+	// 	line = read_line();
+	// 	if (ft_strcmp(line, "") != 0)
+	// 	{
+	// 		// Parsing
 			
-			// Executing
+	// 		// Executing
 			
-			printf("~ %s\n", line);
-		}
-	}
+	// 		printf("~ %s\n", line);
+	// 	}
+	// }
     return (0);
 }
