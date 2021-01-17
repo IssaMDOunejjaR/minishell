@@ -6,14 +6,18 @@
 #    By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/09 14:57:18 by iounejja          #+#    #+#              #
-#    Updated: 2021/01/14 19:09:46 by iounejja         ###   ########.fr        #
+#    Updated: 2021/01/17 17:13:10 by iounejja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 EXEC = minishell
 NAME = minishell.a
 SRCS = utils/ft_strcmp.c \
-		executing/check_commands.c
+		executing/check_commands.c \
+		executing/table_utils.c \
+		executing/pwd.c \
+		executing/cd.c \
+		executing/env.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)

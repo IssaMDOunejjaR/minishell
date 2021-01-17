@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:42:06 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/14 18:59:48 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/01/17 17:12:57 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,15 @@
 # include <stdio.h>
 # include <string.h>
 # include <stdlib.h>
+# include <fcntl.h>
 # include <signal.h>
 # include <dirent.h>
 # include <errno.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include "utils/libft/libft.h"
+
+char	*g_cwd;
 
 typedef enum 	s_type
 {
@@ -51,7 +54,15 @@ typedef struct	s_cmd
 int     ft_strcmp(char *s1, char *s2);
 
 // Executing Section
-void	command_is_valid(t_cmd *cmd, char **env);
 void	check_command(t_cmd *cmd, char **env);
+void	free_table(char **tab);
+int		table_len_2d(char **tab);
+char	**sort_table_2d(char **tab);
+char	**copy_table_2d(char **tab);
+char	**tab_join(char **tab, char *line);
+char	*get_current_working_directory();
+void	change_directory(t_cmd *cmd);
+void	print_cwd();
+void	print_env(char **env);
 
 #endif
