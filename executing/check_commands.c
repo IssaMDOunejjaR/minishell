@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: issamdounejjar <issamdounejjar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 18:17:54 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/17 18:13:30 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/01/22 18:13:55 by issamdounej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,36 @@ static char		**get_env_path(char **env)
 	{
 		tmp = ft_split(env[i], '=');
 		if (ft_strcmp(tmp[0], "PATH") == 0)
+		{
+			free_table(tmp);
 			break ;
+		}
 		free_table(tmp);
 		i++;
 	}
 	return (ft_split(tmp[1], ':'));
+}
+
+char	*get_env_var(char **env, char *name)
+{
+	int		i;
+	char	**tmp;
+	char	*value;
+	
+	i = 0;
+	while (env[i] != NULL)
+	{
+		tmp = ft_split(env[i], '=');
+		if (ft_strcmp(tmp[0], name) == 0)
+		{
+			value = ft_strdup(tmp[1]);
+			free_table(tmp);
+			break ;
+		}
+		free_table(tmp);
+		i++;
+	}
+	return (value);
 }
 
 static void		command_is_valid(t_cmd *cmd, char **env)
@@ -83,14 +108,28 @@ void			check_command(t_cmd *cmd, char **env)
 	if (tmp[0] == '.' || tmp[0] == '/')
 		check_if_file_exist(cmd);
 	else if (ft_strcmp(tmp, "echo") == 0 || ft_strcmp(tmp, "export") == 0 || 
-	ft_strcmp(tmp, "unset") == 0 || ft_strcmp(tmp, "exit") == 0)
+	ft_strcmp(tmp, "unset") == 0)
 		printf("is a built in command\n");
 	else if (ft_strcmp(tmp, "cd") == 0)
 		change_directory(cmd);
 	else if (ft_strcmp(tmp, "pwd") == 0)
-		print_cwd();
+		ft_putendl_fd(getcwd(NULL, 0), 1);
 	else if (ft_strcmp(tmp, "env") == 0)
 		print_env(env);
+	else if (ft_strcmp(tmp, "exit") == 0)
+		exit_shell();
 	else
 		command_is_valid(cmd, env);
+}
+
+void	get_commands(t_cmd *cmd, char **env)
+{
+	// int ret;
+
+	// while (/* (parse function) != 0 */1)
+	// {
+		check_command(cmd, env);
+	// }
+	// if (ret == 0)
+	// 	ft_putstr_fd("syntax error!", 1);
 }

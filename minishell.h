@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: issamdounejjar <issamdounejjar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:42:06 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/17 17:12:57 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/01/22 18:18:17 by issamdounej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include "utils/libft/libft.h"
 
 char	*g_cwd;
+int		g_error_value;
 
 typedef enum 	s_type
 {
@@ -64,5 +65,10 @@ char	*get_current_working_directory();
 void	change_directory(t_cmd *cmd);
 void	print_cwd();
 void	print_env(char **env);
+char	*get_env_var(char **env, char *name);
+char    **convert_env(char **env);
+void    execute_command(t_cmd *cmd);
+void	get_commands(t_cmd *cmd, char **env);
+void	exit_shell();
 
 #endif

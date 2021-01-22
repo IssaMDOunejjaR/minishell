@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: issamdounejjar <issamdounejjar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 15:12:26 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/17 18:38:43 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/01/22 18:21:51 by issamdounej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,34 +34,41 @@ char	*ft_read_line()
 	return (line);
 }
 
+void	print_prompt()
+{
+	g_cwd = get_current_working_directory();
+	if (g_error_value == 0)
+		ft_putstr_fd("\e[1;92m-> ", 1);
+	else
+		ft_putstr_fd("\e[1;91m-> ", 1);
+	ft_putstr_fd("\e[1;96mminishell \e[1;94m( \e[1;93m", 1);
+	ft_putstr_fd(g_cwd, 1);
+	ft_putstr_fd("\e[1;94m )", 1);
+	ft_putstr_fd("\e[1;91m /# \e[0m", 1);
+}
+
 void	signal_handler(int signal)
 {
 	ft_putstr_fd("\b\b  \b\b", 1);
 	if (signal == SIGINT)
 	{
-		g_cwd = get_current_working_directory();
-		ft_putstr_fd("\n\e[1;92m-> \e[1;96mminishell \e[1;94m( \e[1;93m", 1);
-		ft_putstr_fd(g_cwd, 1);
-		ft_putstr_fd("\e[1;94m )", 1);
-		ft_putstr_fd("\e[1;91m /# \e[0m", 1);
+		ft_putchar_fd('\n', 1);
+		print_prompt();
 	}
 }
 
 int     main()
 {
-	extern char **environ;
-	char	*line;
-	t_cmd	cmd;
+	extern char	**environ;
+	char		*line;
+	t_cmd		cmd;
 	
 	signal(SIGINT, signal_handler);
 	// signal(SIGQUIT, signal_handler);
+	g_error_value = 0;
 	while (1)
 	{
-		g_cwd = get_current_working_directory();
-		ft_putstr_fd("\e[1;92m-> \e[1;96mminishell \e[1;94m( \e[1;93m", 1);
-		ft_putstr_fd(g_cwd, 1);
-		ft_putstr_fd("\e[1;94m )", 1);
-		ft_putstr_fd("\e[1;91m /# \e[0m", 1);
+		print_prompt();
 		line = ft_read_line();
 		// if (!feof(stdin))
 		// {
@@ -73,11 +80,19 @@ int     main()
 			// Parsing
 			
 			// Executing
-			cmd.cmds = ft_lstnew("./test.sh");
-			ft_lstadd_back(&cmd.cmds, ft_lstnew("executing"));
+			cmd.cmds = ft_lstnew("exit");
+			ft_lstadd_back(&cmd.cmds, ft_lstnew("-la"));
 			// ft_lstadd_back(&cmd.cmds, ft_lstnew("hello"));
 
-			check_command(&cmd, environ);
+			get_commands(&cmd, environ);
+			// execute_command(&cmd);
+			// char **test = convert_env(environ);
+			// int i = 0;
+			// while (test[i] != NULL)
+			// {
+			// 	ft_putendl_fd(test[i], 1);
+			// 	i++;
+			// }
 		}
 		free(g_cwd);
 	}

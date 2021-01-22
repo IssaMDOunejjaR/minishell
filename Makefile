@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+         #
+#    By: issamdounejjar <issamdounejjar@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/09 14:57:18 by iounejja          #+#    #+#              #
-#    Updated: 2021/01/17 17:13:10 by iounejja         ###   ########.fr        #
+#    Updated: 2021/01/22 18:13:04 by issamdounej      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,10 @@ SRCS = utils/ft_strcmp.c \
 		executing/table_utils.c \
 		executing/pwd.c \
 		executing/cd.c \
-		executing/env.c
+		executing/env.c \
+		executing/export.c \
+		executing/execute_command.c \
+		executing/exit.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)

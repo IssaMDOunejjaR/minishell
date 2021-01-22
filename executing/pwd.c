@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: issamdounejjar <issamdounejjar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 16:53:34 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/17 15:05:08 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/01/22 18:05:28 by issamdounej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,19 @@
 
 char	*get_current_working_directory()
 {
-	char **tmp;
 	char *cwd;
+	char **tmp;
 	
 	cwd = getcwd(NULL, 0);
-	tmp = ft_split(cwd, '/');
-	if (tmp[table_len_2d(tmp) - 1] != NULL)
-		cwd = ft_strdup(tmp[table_len_2d(tmp) - 1]);
-	if (cwd == NULL)
+	if (ft_strcmp(cwd, "/") != 0)
+		tmp = ft_split(cwd, '/');
+	free(cwd);
+	if (tmp == NULL)
 		cwd = ft_strdup("/");
-	free_table(tmp);
+	else
+	{
+		cwd = ft_strdup(tmp[table_len_2d(tmp) - 1]);
+		free_table(tmp);
+	}
 	return (cwd);
-}
-
-void	print_cwd()
-{
-	char *cwd;
-
-	cwd = getcwd(NULL, 0);
-	ft_putendl_fd(cwd, 1);
 }

@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: issamdounejjar <issamdounejjar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/17 15:48:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/22 18:23:56 by issamdounej      ###   ########.fr       */
+/*   Created: 2021/01/22 17:49:00 by issamdounej       #+#    #+#             */
+/*   Updated: 2021/01/22 18:02:29 by issamdounej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	exit_shell()
+void    execute_command(t_cmd *cmd)
 {
-    ft_putendl_fd("exit", 1);
-    // free cmd
-	free(g_cwd);
-    exit(0);
+    // char **args;
+    char *command;
+
+    command = cmd->cmds->content;
+    // cmd->cmds = cmd->cmds->next;
+    char *args[] = {
+        "-a",
+        NULL
+    };
+
+    execve(command, args, NULL);
 }
