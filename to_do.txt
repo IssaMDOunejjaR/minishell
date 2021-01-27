@@ -1,0 +1,4 @@
+export a='   test   '
+export b='         p'
+echo $a$b
+echo $a $b
