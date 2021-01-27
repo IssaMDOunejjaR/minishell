@@ -3,16 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: issamdounejjar <issamdounejjar@student.    +#+  +:+       +#+         #
+#    By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/09 14:57:18 by iounejja          #+#    #+#              #
-#    Updated: 2021/01/22 18:13:04 by issamdounej      ###   ########.fr        #
+#    Updated: 2021/01/27 15:58:45 by ychennaf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 EXEC = minishell
 NAME = minishell.a
 SRCS = utils/ft_strcmp.c \
+		parsing/parse.c \
+		parsing/parse_simple.c \
+		parsing/get_env.c \
 		executing/check_commands.c \
 		executing/table_utils.c \
 		executing/pwd.c \
@@ -36,6 +39,7 @@ $(NAME): $(OBJS)
 clean:
 	rm -rf *.o
 	rm -rf utils/*.o
+	rm -rf parsing/*.o
 	rm -rf executing/*.o
 	cd utils/libft &&  make clean
 

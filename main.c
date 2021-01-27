@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 15:12:26 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/27 16:18:29 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/01/27 16:24:57 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,9 @@ int     main()
 		if (ft_strcmp(line, "") != 0)
 		{
 			// Parsing
-			
+			// cmd = malloc(sizeof(t_cmd));
+			// cmd->files = malloc(sizeof(t_file));
+			get_command(line, environ, &cmd);
 			// Executing
 			cmd.cmds = ft_lstnew("cd");
 			ft_lstadd_back(&cmd.cmds, ft_lstnew(".."));
