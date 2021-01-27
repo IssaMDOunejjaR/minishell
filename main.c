@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: issamdounejjar <issamdounejjar@student.    +#+  +:+       +#+        */
+/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 15:12:26 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/22 18:21:51 by issamdounej      ###   ########.fr       */
+/*   Updated: 2021/01/27 16:18:29 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ int     main()
 			// Parsing
 			
 			// Executing
-			cmd.cmds = ft_lstnew("exit");
-			ft_lstadd_back(&cmd.cmds, ft_lstnew("-la"));
+			cmd.cmds = ft_lstnew("cd");
+			ft_lstadd_back(&cmd.cmds, ft_lstnew(".."));
 			// ft_lstadd_back(&cmd.cmds, ft_lstnew("hello"));
 
 			get_commands(&cmd, environ);

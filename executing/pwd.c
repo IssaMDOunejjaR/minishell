@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: issamdounejjar <issamdounejjar@student.    +#+  +:+       +#+        */
+/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 16:53:34 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/22 18:05:28 by issamdounej      ###   ########.fr       */
+/*   Updated: 2021/01/27 16:23:27 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,12 @@ char	*get_current_working_directory()
 	char **tmp;
 	
 	cwd = getcwd(NULL, 0);
-	if (ft_strcmp(cwd, "/") != 0)
-		tmp = ft_split(cwd, '/');
+	tmp = ft_split(cwd, '/');
 	free(cwd);
-	if (tmp == NULL)
+	if (ft_strcmp(cwd, "/") == 0)
 		cwd = ft_strdup("/");
 	else
-	{
 		cwd = ft_strdup(tmp[table_len_2d(tmp) - 1]);
-		free_table(tmp);
-	}
+	free_table(tmp);
 	return (cwd);
 }
