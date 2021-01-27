@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 15:12:26 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/27 16:00:06 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/01/27 16:15:24 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,28 +34,28 @@ char	*ft_read_line()
 	return (line);
 }
 
-void	print_prompt()
-{
-	g_cwd = get_current_working_directory();
-	if (g_error_value == 0)
-		ft_putstr_fd("\e[1;92m-> ", 1);
-	else
-		ft_putstr_fd("\e[1;91m-> ", 1);
-	ft_putstr_fd("\e[1;96mminishell \e[1;94m( \e[1;93m", 1);
-	ft_putstr_fd(g_cwd, 1);
-	ft_putstr_fd("\e[1;94m )", 1);
-	ft_putstr_fd("\e[1;91m /# \e[0m", 1);
-}
+// void	print_prompt()
+// {
+// 	g_cwd = get_current_working_directory();
+// 	if (g_error_value == 0)
+// 		ft_putstr_fd("\e[1;92m-> ", 1);
+// 	else
+// 		ft_putstr_fd("\e[1;91m-> ", 1);
+// 	ft_putstr_fd("\e[1;96mminishell \e[1;94m( \e[1;93m", 1);
+// 	ft_putstr_fd(g_cwd, 1);
+// 	ft_putstr_fd("\e[1;94m )", 1);
+// 	ft_putstr_fd("\e[1;91m /# \e[0m", 1);
+// }
 
-void	signal_handler(int signal)
-{
-	ft_putstr_fd("\b\b  \b\b", 1);
-	if (signal == SIGINT)
-	{
-		ft_putchar_fd('\n', 1);
-		print_prompt();
-	}
-}
+// void	signal_handler(int signal)
+// {
+// 	ft_putstr_fd("\b\b  \b\b", 1);
+// 	if (signal == SIGINT)
+// 	{
+// 		ft_putchar_fd('\n', 1);
+// 		print_prompt();
+// 	}
+// }
 
 int     main()
 {
@@ -63,12 +63,12 @@ int     main()
 	char		*line;
 	t_cmd		cmd;
 	
-	signal(SIGINT, signal_handler);
+	// signal(SIGINT, signal_handler);
 	// signal(SIGQUIT, signal_handler);
 	g_error_value = 0;
 	while (1)
 	{
-		print_prompt();
+		// print_prompt();
 		line = ft_read_line();
 		// if (!feof(stdin))
 		// {
@@ -82,11 +82,11 @@ int     main()
 			// cmd->files = malloc(sizeof(t_file));
 			get_command(line, environ, &cmd);
 			// Executing
-			cmd.cmds = ft_lstnew("exit");
-			ft_lstadd_back(&cmd.cmds, ft_lstnew("-la"));
+			// cmd.cmds = ft_lstnew("exit");
+			// ft_lstadd_back(&cmd.cmds, ft_lstnew("-la"));
 			// ft_lstadd_back(&cmd.cmds, ft_lstnew("hello"));
 
-			get_commands(&cmd, environ);
+			// get_commands(&cmd, environ);
 			// execute_command(&cmd);
 			// char **test = convert_env(environ);
 			// int i = 0;
