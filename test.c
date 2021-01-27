@@ -29,9 +29,13 @@ typedef struct s_cmd
 	t_type type;
 }				t_cmd;
 
+t_list *cmds;
 
 int		main(void)
 {
+	cmds = NULL;
+
+	// ft_lstadd_back(&cmds, f)
 	pid_t pid;
 	int status;
 	t_cmd *cmd;
