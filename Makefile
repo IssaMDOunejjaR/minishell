@@ -6,7 +6,7 @@
 #    By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/09 14:57:18 by iounejja          #+#    #+#              #
-#    Updated: 2021/01/27 15:58:45 by ychennaf         ###   ########.fr        #
+#    Updated: 2021/01/27 17:11:43 by ychennaf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = minishell.a
 SRCS = utils/ft_strcmp.c \
 		parsing/parse.c \
 		parsing/parse_simple.c \
-		parsing/get_env.c \
+		parsing/get_env.c 
 		executing/check_commands.c \
 		executing/table_utils.c \
 		executing/pwd.c \

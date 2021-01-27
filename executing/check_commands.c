@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: issamdounejjar <issamdounejjar@student.    +#+  +:+       +#+        */
+/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 18:17:54 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/22 18:13:55 by issamdounej      ###   ########.fr       */
+/*   Updated: 2021/01/27 16:13:09 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*get_env_var(char **env, char *name)
 {
 	int		i;
 	char	**tmp;
-	char	*value;
+	// char	*value;
 	
 	i = 0;
 	while (env[i] != NULL)
@@ -44,14 +44,13 @@ char	*get_env_var(char **env, char *name)
 		tmp = ft_split(env[i], '=');
 		if (ft_strcmp(tmp[0], name) == 0)
 		{
-			value = ft_strdup(tmp[1]);
 			free_table(tmp);
-			break ;
+			return (tmp[1]);
 		}
 		free_table(tmp);
 		i++;
 	}
-	return (value);
+	return (NULL);
 }
 
 static void		command_is_valid(t_cmd *cmd, char **env)
