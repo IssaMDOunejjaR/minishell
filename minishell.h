@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:42:06 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/27 15:04:19 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/01/27 16:00:19 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,16 @@
 # include <stdio.h>
 # include <string.h>
 # include <stdlib.h>
+# include <fcntl.h>
 # include <signal.h>
 # include <dirent.h>
 # include <errno.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include "utils/libft/libft.h"
-# include "executing/executing.h"
+
+char	*g_cwd;
+int		g_error_value;
 
 int		g_i;
 
@@ -56,8 +59,21 @@ char	*get_env(char **env, char *line);
 char	*get_simple_s(char *line);
 int     ft_strcmp(char *s1, char *s2);
 
-#endif
+// Executing Section
+void	check_command(t_cmd *cmd, char **env);
+void	free_table(char **tab);
+int		table_len_2d(char **tab);
+char	**sort_table_2d(char **tab);
+char	**copy_table_2d(char **tab);
+char	**tab_join(char **tab, char *line);
+char	*get_current_working_directory();
+void	change_directory(t_cmd *cmd);
+void	print_cwd();
+void	print_env(char **env);
+char	*get_env_var(char **env, char *name);
+char    **convert_env(char **env);
+void    execute_command(t_cmd *cmd);
+void	get_commands(t_cmd *cmd, char **env);
+void	exit_shell();
 
-// 1 - content = echo -n test dsfh sghdh || next-> NULL ; file_content = txt || next-> NULL ; type = WRITE
-// 2 - content = ls || next->NULL ; file = NULL ; type = 
-// 1 - content = echo || next -> -n || next -> test || next -> dsfh || next -> sghdh || next -> NULL ;
+#endif
