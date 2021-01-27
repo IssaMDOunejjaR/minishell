@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 15:12:26 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/12 17:38:10 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/01/15 16:26:08 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
+
+extern char	**environ;
 
 char	*read_line()
 {
@@ -34,18 +36,22 @@ char	*read_line()
 	return (line);
 }
 
-int     main(int argc, char **argv, char **env)
+int     main()
 {
 	char	*line;
+	t_cmd	cmd;
 
 	while (1)
 	{
+		g_i = 0;
 		write(1, "> ", 2);
 		line = read_line();
 		if (ft_strcmp(line, "") != 0)
 		{
 			// Parsing
-			
+			// cmd = malloc(sizeof(t_cmd));
+			// cmd->files = malloc(sizeof(t_file));
+			get_command(line, environ, &cmd);
 			// Executing
 			
 			printf("~ %s\n", line);

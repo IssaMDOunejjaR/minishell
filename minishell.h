@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:42:06 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/12 17:10:01 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/01/27 15:04:19 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,14 @@
 # include "utils/libft/libft.h"
 # include "executing/executing.h"
 
+int		g_i;
+
 typedef enum 	s_type
 {
 	WRITE,
 	READ,
 	APPEND,
 	PIPE,
-	SEMICOLLON,
 	END
 }				t_type;
 
@@ -46,11 +47,13 @@ typedef struct	s_file
 typedef struct	s_cmd
 {
 	t_list	*cmds;
-	t_list	*files;
+	t_file	*files;
 	t_type	type;
-	struct s_cmd	*next;
 }				t_cmd;
-
+// Parsing
+int		get_command(char *line, char **env, t_cmd *cmd);
+char	*get_env(char **env, char *line);
+char	*get_simple_s(char *line);
 int     ft_strcmp(char *s1, char *s2);
 
 #endif
