@@ -6,129 +6,242 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 18:17:54 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/27 16:13:09 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/06 18:45:25 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char		**get_env_path(char **env)
-{
-	int		i;
-	char	**tmp;
-	
-	i = 0;
-	while (env[i] != NULL)
-	{
-		tmp = ft_split(env[i], '=');
-		if (ft_strcmp(tmp[0], "PATH") == 0)
-		{
-			free_table(tmp);
-			break ;
-		}
-		free_table(tmp);
-		i++;
-	}
-	return (ft_split(tmp[1], ':'));
-}
-
-char	*get_env_var(char **env, char *name)
-{
-	int		i;
-	char	**tmp;
-	// char	*value;
-	
-	i = 0;
-	while (env[i] != NULL)
-	{
-		tmp = ft_split(env[i], '=');
-		if (ft_strcmp(tmp[0], name) == 0)
-		{
-			free_table(tmp);
-			return (tmp[1]);
-		}
-		free_table(tmp);
-		i++;
-	}
-	return (NULL);
-}
-
-static void		command_is_valid(t_cmd *cmd, char **env)
+void	command_is_valid(t_cmd *cmd, char **env)
 {	
 	int				i;
 	char			**env_path;
 	DIR				*rep;
 	struct	dirent	*read_dir;
-	int				cmd_found;
+	char			*command;
+	char			*tmp;
 
-	// free
-	env_path = get_env_path(env);
 	i = 0;
-	cmd_found = 0;
+	tmp = get_env_var(env, "PATH");
+	env_path = ft_split(tmp, ':');
+	free(tmp);
 	while (env_path[i] != NULL)
 	{
 		rep = opendir(env_path[i]);
+		if (rep == NULL)
+		{
+			ft_putendl_fd(strerror(errno), 1);
+			return ;
+		}
 		while ((read_dir = readdir(rep)) != NULL)
 		{
 			if (ft_strcmp(read_dir->d_name, cmd->cmds->content) == 0)
 			{
-				printf("found!\n");
-				cmd_found = 1;
-				break ;
+				command = ft_strjoin(env_path[i], "/");
+				tmp = command;
+				command = ft_strjoin(command, cmd->cmds->content);
+				free(tmp);
+				tmp = command;
+				cmd->cmds->content = ft_strdup(command);
+				free(tmp);
+				command_exe(cmd, env);
+				closedir(rep);
+				free_table(env_path);
+				return ;
 			}
 		}
-		if (cmd_found == 1)
-			break ;
-		closedir(rep);
+		if (closedir(rep) == -1)
+		{
+			ft_putendl_fd(strerror(errno), 1);
+			return ;
+		}
 		i++;
 	}
+	ft_putendl_fd("command not found", 1);
+	g_error_value = 127;
+	free_table(env_path);
 }
 
-static void		check_if_file_exist(t_cmd *cmd)
+void	check_if_file_exist(t_cmd *cmd, char **env)
 {
 	struct stat sb;
-
-	if (open(cmd->cmds->content, O_RDONLY) < 0)
+	int			fd;
+	
+	fd = open(cmd->cmds->content, O_RDONLY);
+	if (fd < 0)
 	{
 		ft_putendl_fd(strerror(errno), 1);
 		return ;
 	}
 	if (stat(cmd->cmds->content, &sb) == 0 && sb.st_mode & S_IXUSR)
-		printf("executable\n");
+		command_exe(cmd, env);
 	else
-		printf("not executable\n");
+		ft_putendl_fd("Permission denied", 1);
+	close(fd);
 }
 
-void			check_command(t_cmd *cmd, char **env)
+char	**check_command(t_cmd *cmd, char **env)
 {
-	char *tmp;
-
+	char	*tmp;
+	
+	if (cmd->files != NULL)
+		check_files(cmd);
+	if (cmd->cmds == NULL)
+		return (env);
 	tmp = cmd->cmds->content;
 	if (tmp[0] == '.' || tmp[0] == '/')
-		check_if_file_exist(cmd);
-	else if (ft_strcmp(tmp, "echo") == 0 || ft_strcmp(tmp, "export") == 0 || 
-	ft_strcmp(tmp, "unset") == 0)
-		printf("is a built in command\n");
-	else if (ft_strcmp(tmp, "cd") == 0)
-		change_directory(cmd);
+		check_if_file_exist(cmd, env);
+	else if (ft_strcmp(tmp, "echo") == 0)
+		ft_echo(cmd);
 	else if (ft_strcmp(tmp, "pwd") == 0)
-		ft_putendl_fd(getcwd(NULL, 0), 1);
+		print_pwd();
 	else if (ft_strcmp(tmp, "env") == 0)
-		print_env(env);
-	else if (ft_strcmp(tmp, "exit") == 0)
-		exit_shell();
+		ft_env(cmd, env);
+	else if (ft_strcmp(tmp, "export") == 0)
+		print_export(env);
 	else
 		command_is_valid(cmd, env);
+	return (env);
 }
 
-void	get_commands(t_cmd *cmd, char **env)
+int		check_built_in(t_cmd *cmd)
 {
-	// int ret;
+	if (cmd->cmds == NULL)
+		return (1);
+	if (ft_strcmp(cmd->cmds->content, "cd") == 0 || 
+	(ft_strcmp(cmd->cmds->content, "export") == 0 
+	&& ft_lstsize(cmd->cmds) > 1) || 
+	ft_strcmp(cmd->cmds->content, "unset") == 0 || 
+	ft_strcmp(cmd->cmds->content, "exit") == 0)
+		return (1);
+	return (0);
+}
 
-	// while (/* (parse function) != 0 */1)
+char	**exec_built_in(t_cmd *cmd, char **env)
+{
+	if (cmd->files != NULL)
+		check_files(cmd);
+	if (cmd->cmds == NULL)
+		return (env);
+	if (ft_strcmp(cmd->cmds->content, "cd") == 0)
+		env = change_directory(cmd, env);
+	else if (ft_strcmp(cmd->cmds->content, "export") == 0)
+		env = ft_export(cmd, env);
+	else if (ft_strcmp(cmd->cmds->content, "unset") == 0)
+		env = ft_unset(cmd, env);
+	else if (ft_strcmp(cmd->cmds->content, "exit") == 0)
+		exit_shell(cmd, env);
+	return (env);	
+}
+
+int		set_commands(t_cmd *cmd)
+{
+	if (test == 1)
+		return (2);
+	if (test == 0)
+	{
+		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("hello")));
+		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("-la")));
+		
+		// lst_file_add_back(&cmd->files, lst_file_new(ft_strdup("to_do.txt"), READ));
+		// cmd->type = PIPE;
+	}
+	else if (test == 1)
+	{
+		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("grep")));
+		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("OLDPWD")));
+	}
+	else if (test == 2)
+	{
+		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("cd")));
+		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("..")));
+	}
+	else if (test == 3)
+	{
+		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("env")));
+		cmd->type = PIPE;
+	}
+	else if (test == 4)
+	{
+		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("grep")));
+		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("OLDPWD")));
+	}
+	test++;
+	return (1);
+}
+
+char	**execute_commands(t_cmd *cmd, char **env)
+{
+	int		pipe_fd[2];
+	int		fd;
+	pid_t	id;
+	int		status;
+
+	fd = 0;
+	test = 0;
+	while (set_commands(cmd) != 2)
+	{
+		if (check_built_in(cmd) && cmd->type != PIPE)
+			env = exec_built_in(cmd, env);
+		else
+		{
+			if (pipe(pipe_fd) == -1)
+				ft_putendl_fd(strerror(errno), 1);
+			if ((id = fork()) == -1)
+				ft_putendl_fd(strerror(errno), 1);
+			else if (id == 0)
+			{
+				if (dup2(fd, 0) == -1)
+					ft_putendl_fd(strerror(errno), 1);
+				if (cmd->type == PIPE && cmd->files == NULL)
+				{
+					close(pipe_fd[0]);
+					if (dup2(pipe_fd[1], 1) == -1)
+						ft_putendl_fd(strerror(errno), 1);
+				}
+				check_command(cmd, env);
+				exit(g_error_value);
+			}
+			else
+			{
+				waitpid(id, &status, 0);
+				if (cmd->type == PIPE && cmd->files == NULL)
+				{
+					close(pipe_fd[1]);
+					fd = pipe_fd[0];
+				}
+				if (WIFEXITED(status))
+					g_error_value = WEXITSTATUS(status);
+				else if (WIFSIGNALED(status))
+				{
+					if (WTERMSIG(status) == 2)
+						g_error_value = 130;
+					if (WTERMSIG(status) == 3)
+						g_error_value = 131;
+				}
+			}
+		}
+		free_commands(cmd);
+		cmd->type = END;
+	}
+	return (env);
+}
+
+char	**get_commands(t_cmd *cmd, char **env)
+{
+	// int		ret;
+
+	// while ((ret = /* (parse function)*/) != 2)
 	// {
-		check_command(cmd, env);
+	// 	if (ret == 0)
+	// 	{
+	// 		ft_putendl_fd("syntax error", 1);
+	// 		free_commands(cmd);
+	// 		return (env);
+	// 	}
+	// 	free_commands(cmd);
 	// }
-	// if (ret == 0)
-	// 	ft_putstr_fd("syntax error!", 1);
+
+	env = execute_commands(cmd, env);
+	return (env);
 }

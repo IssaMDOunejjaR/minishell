@@ -6,13 +6,13 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 17:10:03 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/17 17:13:25 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/06 10:56:52 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	print_env(char **env)
+static	void	print_env(char **env)
 {
 	int i;
 
@@ -21,5 +21,16 @@ void	print_env(char **env)
 	{
 		ft_putendl_fd(env[i], 1);
 		i++;
+	}
+}
+
+void	ft_env(t_cmd *cmd, char **env)
+{
+	print_env(env);
+	cmd->cmds = cmd->cmds->next;
+	while (cmd->cmds != NULL)
+	{
+		ft_putendl_fd(cmd->cmds->content, 1);
+		cmd->cmds = cmd->cmds->next;
 	}
 }

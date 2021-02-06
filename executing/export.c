@@ -3,34 +3,93 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: issamdounejjar <issamdounejjar@student.    +#+  +:+       +#+        */
+/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/19 19:46:37 by issamdounej       #+#    #+#             */
-/*   Updated: 2021/01/19 20:00:35 by issamdounej      ###   ########.fr       */
+/*   Created: 2021/01/28 09:55:03 by iounejja          #+#    #+#             */
+/*   Updated: 2021/02/06 17:12:02 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char    **convert_env(char **env)
+static	char	*add_quotes(char *str)
 {
-    int     i;
-    char    **tmp;
-    char    *value;
-    char    **new;
+	char	*new;
+	char	**tmp;
+	char	*tmp1;
 
-    i = 0;
-    new = malloc(sizeof(char*) * (table_len_2d(env) + 1));
-    while (env[i] != NULL)
-    {
-        tmp = ft_split(env[i], '=');
-        value = ft_strjoin("\"", tmp[1]);
-        value = ft_strjoin(value, "\"");
-        value = ft_strjoin("=", value);
-        value = ft_strjoin(tmp[0], value);
-        new[i] = ft_strjoin("declare -x ", value);
-        i++;
-    }
-    new[i] = NULL;
-    return (new);
+	tmp = ft_split(str, '=');
+	if (table_len_2d(tmp) != 2)
+	{
+		free_table(tmp);
+		return (ft_strjoin("declare -x ", str));
+	}
+	new = ft_strjoin("\"", tmp[1]);
+	tmp1 = new;
+	new = ft_strjoin(new, "\"");
+	free(tmp1);
+	tmp1 = new;
+	new = ft_strjoin("=", new);
+	free(tmp1);
+	tmp1 = new;
+	new = ft_strjoin(tmp[0], new);
+	free(tmp1);
+	tmp1 = new;
+	new = ft_strjoin("declare -x ", new);
+	free(tmp1);
+	free_table(tmp);
+	return (new);
+}
+
+static	char	**convert_env(char **env)
+{
+	int		i;
+	char	**new;
+	char	**tmp;
+	char	*tmp2;
+	
+	new = malloc(sizeof(char*) * (table_len_2d(env) + 1));
+	tmp = sort_table_2d(env);
+	i = 0;
+	while (tmp[i] != NULL)
+	{
+		tmp2 = add_quotes(tmp[i]);
+		new[i] = ft_strdup(tmp2);
+		free(tmp2);
+		i++;
+	}
+	new[i] = NULL;
+	free_table(tmp);
+	return (new);
+}
+
+void	print_export(char **env)
+{
+	int		i;
+	char	**new_env;
+	
+	new_env = convert_env(env);
+	i = 0;
+	while (new_env[i] != NULL)
+	{
+		ft_putendl_fd(new_env[i], 1);
+		i++;
+	}
+	free_table(new_env);
+}
+
+char    **ft_export(t_cmd *cmd, char **env)
+{
+	char	**tmp;
+
+	cmd->cmds = cmd->cmds->next;
+	while (cmd->cmds != NULL)
+	{
+		if (find_env_var(env, cmd->cmds->content) == 1)
+			env = change_env_var(cmd->cmds->content, env);
+		else
+			env = tab_join(env, cmd->cmds->content);
+		cmd->cmds = cmd->cmds->next;
+	}
+	return (env);
 }

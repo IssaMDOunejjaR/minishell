@@ -1,41 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   lst_file_new.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/16 16:53:34 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/06 10:46:49 by iounejja         ###   ########.fr       */
+/*   Created: 2021/01/30 11:47:54 by iounejja          #+#    #+#             */
+/*   Updated: 2021/01/30 11:50:03 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*get_current_working_directory()
+t_file	*lst_file_new(char *file, t_type type)
 {
-	char *cwd;
-	char **tmp;
-	
-	cwd = getcwd(NULL, 0);
-	tmp = ft_split(cwd, '/');
-	free(cwd);
-	if (ft_strcmp(cwd, "/") == 0)
-		cwd = ft_strdup("/");
-	else
-		cwd = ft_strdup(tmp[table_len_2d(tmp) - 1]);
-	free_table(tmp);
-	return (cwd);
-}
+	t_file *new;
 
-void	print_pwd()
-{
-	char *cwd;
-
-	cwd = getcwd(NULL, 0);
-	if (cwd == NULL)
-		ft_putendl_fd(strerror(errno), 1);
-	else
-		ft_putendl_fd(cwd, 1);
-	free(cwd);
+	new = malloc(sizeof(t_file));
+	if (new)
+	{
+		new->file = file;
+		new->type = type;
+		new->next = NULL;
+	}
+	return (new);
 }

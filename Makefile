@@ -3,16 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+         #
+#    By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/09 14:57:18 by iounejja          #+#    #+#              #
-#    Updated: 2021/01/27 15:58:45 by ychennaf         ###   ########.fr        #
+#    Updated: 2021/02/04 17:02:17 by iounejja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 EXEC = minishell
 NAME = minishell.a
 SRCS = utils/ft_strcmp.c \
+		utils/lst_file_new.c \
+		utils/lst_file_add_back.c \
 		parsing/parse.c \
 		parsing/parse_simple.c \
 		parsing/get_env.c \
@@ -22,8 +24,12 @@ SRCS = utils/ft_strcmp.c \
 		executing/cd.c \
 		executing/env.c \
 		executing/export.c \
+		executing/exit.c \
+		executing/echo.c \
+		executing/unset.c \
+		executing/command_utils.c \
 		executing/execute_command.c \
-		executing/exit.c
+		executing/files_handling.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
@@ -34,7 +40,7 @@ $(NAME): $(OBJS)
 		ar rcs $(NAME) $(OBJS) utils/libft/*.o
 
 %.o: %.c
-	gcc -Wall -Wextra -Werror -c $< -o $@
+	gcc -c $< -o $@
 
 clean:
 	rm -rf *.o

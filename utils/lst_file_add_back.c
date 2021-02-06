@@ -1,41 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   lst_file_add_back.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/16 16:53:34 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/06 10:46:49 by iounejja         ###   ########.fr       */
+/*   Created: 2021/01/30 11:51:57 by iounejja          #+#    #+#             */
+/*   Updated: 2021/01/30 11:54:07 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*get_current_working_directory()
+void	lst_file_add_back(t_file **alst, t_file *new)
 {
-	char *cwd;
-	char **tmp;
-	
-	cwd = getcwd(NULL, 0);
-	tmp = ft_split(cwd, '/');
-	free(cwd);
-	if (ft_strcmp(cwd, "/") == 0)
-		cwd = ft_strdup("/");
-	else
-		cwd = ft_strdup(tmp[table_len_2d(tmp) - 1]);
-	free_table(tmp);
-	return (cwd);
-}
+	t_file *tmp;
 
-void	print_pwd()
-{
-	char *cwd;
-
-	cwd = getcwd(NULL, 0);
-	if (cwd == NULL)
-		ft_putendl_fd(strerror(errno), 1);
-	else
-		ft_putendl_fd(cwd, 1);
-	free(cwd);
+	if (!alst || !new)
+		return ;
+	if (*alst == NULL)
+	{
+		*alst = new;
+		return ;
+	}
+	tmp = (*alst);
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = new;
 }
