@@ -6,7 +6,7 @@
 #    By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/09 14:57:18 by iounejja          #+#    #+#              #
-#    Updated: 2021/02/04 17:02:17 by iounejja         ###   ########.fr        #
+#    Updated: 2021/02/10 11:22:39 by iounejja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,10 @@ SRCS = utils/ft_strcmp.c \
 		executing/echo.c \
 		executing/unset.c \
 		executing/command_utils.c \
-		executing/execute_command.c \
-		executing/files_handling.c
+		executing/check_and_execute.c \
+		executing/files_handling.c \
+		executing/env_var_utils.c \
+		executing/execute_commands.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)

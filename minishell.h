@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:42:06 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/06 18:37:13 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/10 12:02:27 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,12 @@
 # include "utils/libft/libft.h"
 
 char	*g_cwd;
-char	*old_pwd;
+char	*g_old_pwd;
+char	*g_latest_cmd;
 int		g_error_value;
 int		g_i;
+int		g_prev_fd_read;
+int		g_prev_type;
 
 int		test;
 
@@ -67,9 +70,13 @@ int     ft_strcmp(char *s1, char *s2);
 char	**get_commands(t_cmd *cmd, char **env);
 char	**execute_commands(t_cmd *cmd, char **env);
 char	**check_command(t_cmd *cmd, char **env);
-void	check_if_file_exist(t_cmd *cmd, char **env);
+void	check_if_file_executable(t_cmd *cmd, char **env);
 void	command_is_valid(t_cmd *cmd, char **env);
 void	command_exe(t_cmd *cmd, char **env);
+int		check_built_in(t_cmd *cmd);
+char	**exec_built_in(t_cmd *cmd, char **env);
+char	**execute_commands(t_cmd *cmd, char **env);
+
 
 void	free_table(char **tab);
 int		table_len_2d(char **tab);
@@ -79,6 +86,7 @@ char	**tab_join(char **tab, char *line);
 t_file	*lst_file_new(char *file, t_type type);
 void	lst_file_add_back(t_file **alst, t_file *new);
 void	free_commands(t_cmd *cmd);
+t_list	*check_more_args(t_cmd *cmd);
 
 char	*get_current_working_directory();
 char	**change_directory(t_cmd *cmd, char **env);
@@ -87,14 +95,15 @@ char	*get_env_var(char **env, char *name);
 void	exit_shell(t_cmd *cmd, char **env);
 void	ft_echo(t_cmd *cmd);
 char    **ft_export(t_cmd *cmd, char **env);
-void	check_files(t_cmd *cmd);
+int		check_files(t_cmd *cmd);
 int		find_env_var(char **env, char *env_var);
 char	**ft_unset(t_cmd *cmd, char **env);
-void	ft_env(t_cmd *cmd, char **env);
 void    print_export(char **env);
 char	**delete_env_var(char **env, char *env_var);
 char	**change_env_var(char *env_var, char **env);
 int		check_special_carac(char *str);
 int		is_all_num(char *str);
+void	print_error(char *command, char *content, char *error);
+void	print_env(char **env);
 
 #endif

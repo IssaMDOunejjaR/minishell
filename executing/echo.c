@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 10:38:44 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/06 10:35:18 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/08 14:57:49 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_echo(t_cmd *cmd)
 {
 	int		check;
-	
+
 	check = 0;
 	cmd->cmds = cmd->cmds->next;
 	while (cmd->cmds != NULL && ft_strncmp(cmd->cmds->content, "-n", 2) == 0)

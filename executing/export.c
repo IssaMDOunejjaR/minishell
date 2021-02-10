@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 09:55:03 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/06 17:12:02 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/10 12:02:11 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static	char	**convert_env(char **env)
 	char	**new;
 	char	**tmp;
 	char	*tmp2;
-	
+
 	new = malloc(sizeof(char*) * (table_len_2d(env) + 1));
 	tmp = sort_table_2d(env);
 	i = 0;
@@ -63,11 +63,11 @@ static	char	**convert_env(char **env)
 	return (new);
 }
 
-void	print_export(char **env)
+void			print_export(char **env)
 {
 	int		i;
 	char	**new_env;
-	
+
 	new_env = convert_env(env);
 	i = 0;
 	while (new_env[i] != NULL)
@@ -78,18 +78,23 @@ void	print_export(char **env)
 	free_table(new_env);
 }
 
-char    **ft_export(t_cmd *cmd, char **env)
+char			**ft_export(t_cmd *cmd, char **env)
 {
-	char	**tmp;
+	t_list	*tmp;
 
+	tmp = cmd->cmds;
 	cmd->cmds = cmd->cmds->next;
-	while (cmd->cmds != NULL)
+	if (g_prev_type != PIPE)
 	{
-		if (find_env_var(env, cmd->cmds->content) == 1)
-			env = change_env_var(cmd->cmds->content, env);
-		else
-			env = tab_join(env, cmd->cmds->content);
-		cmd->cmds = cmd->cmds->next;
+		while (cmd->cmds != NULL)
+		{
+			if (find_env_var(env, cmd->cmds->content) == 1)
+				env = change_env_var(cmd->cmds->content, env);
+			else
+				env = tab_join(env, cmd->cmds->content);
+			cmd->cmds = cmd->cmds->next;
+		}
 	}
+	cmd->cmds = tmp;
 	return (env);
 }

@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 14:33:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/06 18:21:53 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/10 12:02:11 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,28 @@ char	**delete_env_var(char **env, char *env_var)
 
 char	**ft_unset(t_cmd *cmd, char **env)
 {
+	char	**tmp;
+	t_list	*tmp_lst;
+
+	tmp_lst = cmd->cmds;
 	cmd->cmds = cmd->cmds->next;
 	while (cmd->cmds != NULL)
 	{
-		if(check_special_carac(cmd->cmds->content) == 1)
+		if (check_special_carac(cmd->cmds->content) == 1)
 		{
-			ft_putendl_fd("not a valid identifier", 1);
+			print_error("unset", cmd->cmds->content, "not a valid identifier");
+			cmd->cmds = tmp_lst;
 			return (env);
 		}
-		if (find_env_var(env, cmd->cmds->content) == 1)
+		if (find_env_var(env, cmd->cmds->content) == 1 &&
+		cmd->type != PIPE && g_prev_type != PIPE)
+		{
+			tmp = env;
 			env = delete_env_var(env, cmd->cmds->content);
+			free_table(tmp);
+		}
 		cmd->cmds = cmd->cmds->next;
 	}
+	cmd->cmds = tmp_lst;
 	return (env);
 }

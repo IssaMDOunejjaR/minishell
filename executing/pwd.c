@@ -6,17 +6,17 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 16:53:34 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/06 10:46:49 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/08 15:03:01 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*get_current_working_directory()
+char	*get_current_working_directory(void)
 {
 	char *cwd;
 	char **tmp;
-	
+
 	cwd = getcwd(NULL, 0);
 	tmp = ft_split(cwd, '/');
 	free(cwd);
@@ -28,13 +28,13 @@ char	*get_current_working_directory()
 	return (cwd);
 }
 
-void	print_pwd()
+void	print_pwd(void)
 {
 	char *cwd;
 
 	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
-		ft_putendl_fd(strerror(errno), 1);
+		print_error("pwd", cwd, NULL);
 	else
 		ft_putendl_fd(cwd, 1);
 	free(cwd);
