@@ -6,11 +6,11 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 09:55:03 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/10 12:02:11 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/11 11:10:01 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 static	char	*add_quotes(char *str)
 {

@@ -6,11 +6,11 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 17:43:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/09 18:40:46 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/11 11:16:39 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 char				*get_env_var(char **env, char *name)
 {

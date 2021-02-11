@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 15:12:26 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/10 17:34:46 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/11 15:19:15 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,18 +82,14 @@ int     main()
 
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
-	g_error_value = 0;
 	env = copy_table_2d(environ);
-	g_latest_cmd = ft_strdup("minishell");
-	g_old_pwd = ft_strdup("");
-	env = change_env_var("OLDPWD", env);
+	env = init_global(env);
 	// env = get_commands(&cmd, env);
 	// free(g_cwd);
 	// free_table(env);
 	while (1)
 	{
 		print_prompt();
-		// printf("latest = %s\n", g_latest_cmd);
 		line = ft_read_line();
 		if (!line)
 			handle_ctrl_d(line, env);

@@ -6,11 +6,11 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 17:57:31 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/10 17:39:03 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/11 15:25:05 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 int		set_commands(t_cmd *cmd)
 {
@@ -18,32 +18,30 @@ int		set_commands(t_cmd *cmd)
 		return (2);
 	if (test == 0)
 	{
-		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("ls")));
-		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("-la")));
+		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("cat")));
+		// ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("ttttt")));
 		// ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("/dev/random")));
 		
-		lst_file_add_back(&cmd->files, lst_file_new(ft_strdup("t1"), WRITE));
-		lst_file_add_back(&cmd->files, lst_file_new(ft_strdup("dfgsdfgsdf"), READ));
-		lst_file_add_back(&cmd->files, lst_file_new(ft_strdup("t2"), WRITE));
+		// lst_file_add_back(&cmd->files, lst_file_new(ft_strdup("t1"), WRITE));
+		// lst_file_add_back(&cmd->files, lst_file_new(ft_strdup("dfgsdfgsdf"), READ));
+		// lst_file_add_back(&cmd->files, lst_file_new(ft_strdup("t2"), WRITE));
 		cmd->type = END;
 	}
 	else if (test == 1)
 	{
-		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("fdsfds")));
-		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("to_do.txt")));
+		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("cat")));
+		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("ttt")));
 		// ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("@")));
 		// ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("head")));
 		// ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("-c")));
 		// ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("100")));
 
 		// lst_file_add_back(&cmd->files, lst_file_new(ft_strdup("t1"), WRITE));
-		cmd->type = PIPE;
+		cmd->type = END;
 	}
 	else if (test == 2)
 	{
-		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("tr")));
-		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("a")));
-		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("@")));
+		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("env")));
 		// cmd->type = PIPE;
 	}
 	else if (test == 3)
@@ -119,8 +117,7 @@ static	int		execute_proccess(t_cmd *cmd, char **env, int fd, int pipe_fd[2])
 	else if (id == 0)
 	{
 		child_process(cmd, env, fd, pipe_fd);
-		// exit(g_error_value);
-		exit(1);
+		exit(g_error_value);
 	}
 	else
 	{
@@ -128,6 +125,47 @@ static	int		execute_proccess(t_cmd *cmd, char **env, int fd, int pipe_fd[2])
 		fd = parent_process(cmd, id, pipe_fd);
 	}
 	return (fd);
+}
+
+char			**init_global(char **env)
+{
+	int		shell_lvl;
+	char	*new_shellvl;
+	char	*tmp;
+	
+	g_error_value = 0;
+	g_latest_cmd = ft_strdup("minishell");
+	g_old_pwd = ft_strdup("");
+	env = change_env_var("OLDPWD", env);
+	tmp = get_env_var(env, "SHLVL");
+	shell_lvl = ft_atoi(tmp) + 1;
+	free(tmp);
+	tmp = ft_itoa(shell_lvl);
+	new_shellvl = ft_strjoin("SHLVL=", tmp);
+	free(tmp);
+	env = change_env_var(new_shellvl, env);
+	free(new_shellvl);
+	return (env);
+}
+
+void			get_latest_cmd(t_cmd *cmd)
+{
+	t_list	*tmp;
+
+	tmp = cmd->cmds;
+	while (cmd->cmds->next != NULL)
+		cmd->cmds = cmd->cmds->next;
+	if (cmd->type != PIPE && g_prev_type != PIPE)
+	{
+		free(g_latest_cmd);
+		g_latest_cmd = ft_strdup(cmd->cmds->content);
+	}
+	else
+	{
+		free(g_latest_cmd);
+		g_latest_cmd = ft_strdup("");
+	}
+	cmd->cmds = tmp;
 }
 
 char			**execute_commands(t_cmd *cmd, char **env)
@@ -146,6 +184,7 @@ char			**execute_commands(t_cmd *cmd, char **env)
 			env = exec_built_in(cmd, env);
 		else
 			fd = execute_proccess(cmd, env, fd, pipe_fd);
+		get_latest_cmd(cmd);
 		free_commands(cmd);
 		g_prev_type = cmd->type;
 		cmd->type = END;

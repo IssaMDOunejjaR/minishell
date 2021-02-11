@@ -6,11 +6,11 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 15:07:04 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/08 15:04:05 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/11 11:17:09 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 static	int		check_equal(char **tab, int i)
 {

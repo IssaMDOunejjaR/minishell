@@ -6,11 +6,11 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 11:47:54 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/08 15:05:41 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/11 11:17:04 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 t_file	*lst_file_new(char *file, t_type type)
 {

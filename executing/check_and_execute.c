@@ -6,11 +6,11 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 15:21:55 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/10 17:39:17 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/11 15:21:59 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 static	char	**get_args(t_cmd *cmd)
 {
@@ -93,5 +93,5 @@ void			command_exe(t_cmd *cmd, char **env)
 	command = cmd->cmds->content;
 	args = get_args(cmd);
 	if (execve(command, args, env) != 0)
-		exit(1);
+		g_error_value = 1;
 }

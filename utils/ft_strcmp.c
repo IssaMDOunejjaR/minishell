@@ -6,11 +6,11 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 15:00:14 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/08 15:05:17 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/11 11:16:57 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 int		ft_strcmp(char *s1, char *s2)
 {

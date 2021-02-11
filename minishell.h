@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:42:06 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/10 12:02:27 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/11 11:22:59 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	lst_file_add_back(t_file **alst, t_file *new);
 void	free_commands(t_cmd *cmd);
 t_list	*check_more_args(t_cmd *cmd);
 
+char	**init_global(char **env);
 char	*get_current_working_directory();
 char	**change_directory(t_cmd *cmd, char **env);
 void	print_pwd();

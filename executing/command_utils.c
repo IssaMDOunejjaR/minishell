@@ -6,11 +6,11 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 10:47:54 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/10 17:11:03 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/11 11:16:35 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 void	free_commands(t_cmd *cmd)
 {

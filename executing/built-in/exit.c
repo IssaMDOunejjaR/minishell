@@ -6,13 +6,22 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 15:48:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/10 12:02:11 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/11 12:16:53 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-void	exit_shell(t_cmd *cmd, char **env)
+static	void	free_and_exit(t_cmd *cmd, char **env)
+{
+	free(g_cwd);
+	free(g_latest_cmd);
+	free_table(env);
+	free_commands(cmd);
+	exit(g_error_value);
+}
+
+void			exit_shell(t_cmd *cmd, char **env)
 {
 	t_list *tmp;
 
@@ -33,10 +42,5 @@ void	exit_shell(t_cmd *cmd, char **env)
 	}
 	cmd->cmds = tmp;
 	if (cmd->type != PIPE && g_prev_type != PIPE)
-	{
-		free(g_cwd);
-		free_table(env);
-		free_commands(cmd);
-		exit(g_error_value);
-	}
+		free_and_exit(cmd, env);
 }

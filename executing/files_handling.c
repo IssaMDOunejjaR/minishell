@@ -6,11 +6,11 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 11:18:21 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/10 14:47:19 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/11 11:16:48 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 static	t_file		*handle_write_append(t_cmd *cmd)
 {
