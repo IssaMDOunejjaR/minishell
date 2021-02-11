@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   free_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 11:34:46 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/10 11:46:29 by ychennaf         ###   ########.fr       */
+/*   Created: 2021/02/02 17:33:00 by ychennaf          #+#    #+#             */
+/*   Updated: 2021/02/11 10:45:07 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-int		ft_isdigit(int c)
+void    free_commands(t_cmd *cmd)
 {
-	if (!(c >= '1' && c <= '9'))
-		return (0);
-	return (1);
+    while (cmd->cmds != NULL)
+    {
+        free(cmd->cmds->content);
+        free(cmd->cmds);
+        cmd->cmds = cmd->cmds->next;
+    }
+    while (cmd->files != NULL)
+    {
+        free(cmd->files->file);
+        free(cmd->files);
+        cmd->files = cmd->files->next;
+    }
 }

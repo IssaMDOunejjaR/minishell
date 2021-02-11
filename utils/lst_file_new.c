@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   lst_file_new.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 11:34:46 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/10 11:46:29 by ychennaf         ###   ########.fr       */
+/*   Created: 2021/02/10 15:10:26 by ychennaf          #+#    #+#             */
+/*   Updated: 2021/02/10 15:15:05 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-int		ft_isdigit(int c)
+t_file  *lst_file_new(char *file, t_type type)
 {
-	if (!(c >= '1' && c <= '9'))
-		return (0);
-	return (1);
+    t_file *new;
+    new = malloc(sizeof(t_file));
+    if (new)
+    {
+        new->file = file;
+        new->type = type;
+        new->next = NULL;
+    }
+    return (new);
 }

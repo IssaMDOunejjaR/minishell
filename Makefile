@@ -6,16 +6,24 @@
 #    By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/09 14:57:18 by iounejja          #+#    #+#              #
-#    Updated: 2021/01/27 17:11:43 by ychennaf         ###   ########.fr        #
+#    Updated: 2021/02/10 15:14:45 by ychennaf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 EXEC = minishell
 NAME = minishell.a
 SRCS = utils/ft_strcmp.c \
+		utils/lst_file_add_back.c \
+		utils/lst_file_new.c \
 		parsing/parse.c \
 		parsing/parse_simple.c \
-		parsing/get_env.c 
+		parsing/get_env.c \
+		parsing/handle_quotes.c \
+		parsing/free_cmd.c \
+		parsing/check_line.c \
+		parsing/handle_line.c \
+		parsing/handle_cmd.c \
+		parsing/fill_line.c \
 		executing/check_commands.c \
 		executing/table_utils.c \
 		executing/pwd.c \
@@ -27,14 +35,14 @@ SRCS = utils/ft_strcmp.c \
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
-	gcc -Wall -Wextra -Werror main.c $(NAME) -o $(EXEC)
+	gcc main.c $(NAME) -o $(EXEC)
 
 $(NAME): $(OBJS)
 		cd utils/libft && make bonus
 		ar rcs $(NAME) $(OBJS) utils/libft/*.o
 
 %.o: %.c
-	gcc -Wall -Wextra -Werror -c $< -o $@
+	gcc -c $< -o $@
 
 clean:
 	rm -rf *.o
