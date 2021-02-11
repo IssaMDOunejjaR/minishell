@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:42:06 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/11 11:22:59 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/11 15:30:44 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,10 @@ t_file	*lst_file_new(char *file, t_type type);
 void	lst_file_add_back(t_file **alst, t_file *new);
 void	free_commands(t_cmd *cmd);
 t_list	*check_more_args(t_cmd *cmd);
+int		is_all_num(char *str);
 
 char	**init_global(char **env);
+int		find_env_var(char **env, char *env_var);
 char	*get_current_working_directory();
 char	**change_directory(t_cmd *cmd, char **env);
 void	print_pwd();
@@ -97,13 +99,11 @@ void	exit_shell(t_cmd *cmd, char **env);
 void	ft_echo(t_cmd *cmd);
 char    **ft_export(t_cmd *cmd, char **env);
 int		check_files(t_cmd *cmd);
-int		find_env_var(char **env, char *env_var);
 char	**ft_unset(t_cmd *cmd, char **env);
 void    print_export(char **env);
 char	**delete_env_var(char **env, char *env_var);
 char	**change_env_var(char *env_var, char **env);
 int		check_special_carac(char *str);
-int		is_all_num(char *str);
 void	print_error(char *command, char *content, char *error);
 void	print_env(char **env);
 

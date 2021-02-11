@@ -6,10 +6,9 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 15:12:26 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/11 15:19:15 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/11 17:06:38 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -27,7 +26,7 @@ char	*ft_read_line(void)
 		tmp = line;
 		line = ft_strjoin(line, buffer);
 		free(tmp);
-		if(ft_strchr(buffer, '\n'))
+		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
 	if (!ret)
@@ -84,9 +83,6 @@ int     main()
 	signal(SIGQUIT, signal_handler);
 	env = copy_table_2d(environ);
 	env = init_global(env);
-	// env = get_commands(&cmd, env);
-	// free(g_cwd);
-	// free_table(env);
 	while (1)
 	{
 		print_prompt();

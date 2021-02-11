@@ -6,60 +6,60 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 17:57:31 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/11 15:25:05 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/11 17:07:43 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		set_commands(t_cmd *cmd)
-{
-	if (test == 1)
-		return (2);
-	if (test == 0)
-	{
-		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("cat")));
-		// ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("ttttt")));
-		// ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("/dev/random")));
+// int		set_commands(t_cmd *cmd)
+// {
+// 	if (test == 1)
+// 		return (2);
+// 	if (test == 0)
+// 	{
+// 		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("cat")));
+// 		// ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("ttttt")));
+// 		// ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("/dev/random")));
 		
-		// lst_file_add_back(&cmd->files, lst_file_new(ft_strdup("t1"), WRITE));
-		// lst_file_add_back(&cmd->files, lst_file_new(ft_strdup("dfgsdfgsdf"), READ));
-		// lst_file_add_back(&cmd->files, lst_file_new(ft_strdup("t2"), WRITE));
-		cmd->type = END;
-	}
-	else if (test == 1)
-	{
-		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("cat")));
-		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("ttt")));
-		// ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("@")));
-		// ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("head")));
-		// ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("-c")));
-		// ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("100")));
+// 		// lst_file_add_back(&cmd->files, lst_file_new(ft_strdup("t1"), WRITE));
+// 		// lst_file_add_back(&cmd->files, lst_file_new(ft_strdup("dfgsdfgsdf"), READ));
+// 		// lst_file_add_back(&cmd->files, lst_file_new(ft_strdup("t2"), WRITE));
+// 		cmd->type = END;
+// 	}
+// 	else if (test == 1)
+// 	{
+// 		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("cat")));
+// 		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("ttt")));
+// 		// ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("@")));
+// 		// ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("head")));
+// 		// ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("-c")));
+// 		// ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("100")));
 
-		// lst_file_add_back(&cmd->files, lst_file_new(ft_strdup("t1"), WRITE));
-		cmd->type = END;
-	}
-	else if (test == 2)
-	{
-		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("env")));
-		// cmd->type = PIPE;
-	}
-	else if (test == 3)
-	{
-		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("grep")));
-		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("env")));
-		// ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("exe")));
-		cmd->type = PIPE;
-	}
-	else if (test == 4)
-	{
-		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("tr")));
-		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("_")));
-		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("|")));
-	}
-	test++;
-	return (1);
-}
+// 		// lst_file_add_back(&cmd->files, lst_file_new(ft_strdup("t1"), WRITE));
+// 		cmd->type = END;
+// 	}
+// 	else if (test == 2)
+// 	{
+// 		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("env")));
+// 		// cmd->type = PIPE;
+// 	}
+// 	else if (test == 3)
+// 	{
+// 		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("grep")));
+// 		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("env")));
+// 		// ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("exe")));
+// 		cmd->type = PIPE;
+// 	}
+// 	else if (test == 4)
+// 	{
+// 		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("tr")));
+// 		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("_")));
+// 		ft_lstadd_back(&cmd->cmds, ft_lstnew(ft_strdup("|")));
+// 	}
+// 	test++;
+// 	return (1);
+// }
 
 static	int		parent_process(t_cmd *cmd, pid_t id, int pipe_fd[2])
 {
@@ -173,7 +173,7 @@ char			**execute_commands(t_cmd *cmd, char **env)
 	int		pipe_fd[2];
 	int		fd;
 
-	test = 0;
+	// test = 0;
 	g_prev_fd_read = -1;
 	fd = 0;
 	g_prev_type = END;
@@ -187,7 +187,7 @@ char			**execute_commands(t_cmd *cmd, char **env)
 		get_latest_cmd(cmd);
 		free_commands(cmd);
 		g_prev_type = cmd->type;
-		cmd->type = END;
+		// cmd->type = END;
 	}
 	return (env);
 }

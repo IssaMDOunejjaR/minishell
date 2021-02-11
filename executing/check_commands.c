@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 18:17:54 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/11 11:16:31 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/11 15:31:04 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,9 @@ void	command_is_valid(t_cmd *cmd, char **env)
 	while (env_path[i] != NULL)
 	{
 		if (check_directories(cmd, env, env_path, i) == 1)
-		{
-			return;
-		}
+			return ;
 		i++;
 	}
-	
 	print_error(cmd->cmds->content, NULL, "command not found");
 	g_error_value = 127;
 	free_table(env_path);
