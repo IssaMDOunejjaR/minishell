@@ -6,31 +6,30 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 15:07:04 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/16 16:50:13 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/11 11:17:09 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-void	free_table(char **tab)
+static	int		check_equal(char **tab, int i)
 {
-	int	i;
+	int j;
 
-	i = 0;
-	while (tab[i] != NULL)
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
+	j = 0;
+	while (tab[i][j] != '\0' && tab[i + 1] != NULL &&
+	tab[i][j] == tab[i + 1][j])
+		j++;
+	return (j);
 }
 
-char	**sort_table_2d(char **tab)
+char			**sort_table_2d(char **tab)
 {
-	char	*tmp;
 	int		i;
+	int		j;
 	int		is_sorted;
-	
+	char	*tmp;
+
 	is_sorted = 0;
 	while (is_sorted == 0)
 	{
@@ -38,7 +37,8 @@ char	**sort_table_2d(char **tab)
 		i = 0;
 		while (tab[i] != NULL)
 		{
-			if (tab[i + 1] != NULL && tab[i][0] > tab[i + 1][0])
+			j = check_equal(tab, i);
+			if (tab[i + 1] != NULL && tab[i][j] > tab[i + 1][j])
 			{
 				tmp = tab[i];
 				tab[i] = tab[i + 1];
@@ -51,7 +51,7 @@ char	**sort_table_2d(char **tab)
 	return (tab);
 }
 
-char	**copy_table_2d(char **tab)
+char			**copy_table_2d(char **tab)
 {
 	int		i;
 	char	**new_tab;
@@ -67,14 +67,14 @@ char	**copy_table_2d(char **tab)
 	return (new_tab);
 }
 
-char	**tab_join(char **tab, char *line)
+char			**tab_join(char **tab, char *line)
 {
 	char	**new_tab;
 	int		i;
-	
+
 	new_tab = malloc(sizeof(char*) * (table_len_2d(tab) + 2));
 	i = 0;
-	while(tab[i] != NULL)
+	while (tab[i] != NULL)
 	{
 		new_tab[i] = ft_strdup(tab[i]);
 		i++;
@@ -85,7 +85,7 @@ char	**tab_join(char **tab, char *line)
 	return (new_tab);
 }
 
-int		table_len_2d(char **tab)
+int				table_len_2d(char **tab)
 {
 	int		i;
 

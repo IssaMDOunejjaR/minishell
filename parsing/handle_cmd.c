@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 12:00:23 by ychennaf          #+#    #+#             */
-/*   Updated: 2021/02/11 16:41:23 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/11 18:56:38 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,8 @@ int		size_q(char *line, char **env, int *i, char type)
 					l++;
 				(*i)++;
 			}
-			printf("line = |%c|\n",line[*i]);
-			//(line[*i] != type && type == '"' && line[*i - 1] != '\\') || (line[*i] != type && type == '\'')
 		}
 	}
-	// *i = *i + 1;
-	printf("l = |%d|\n",l);
 	return (l);
 }
 

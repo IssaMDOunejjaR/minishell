@@ -6,15 +6,16 @@
 #    By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/09 14:57:18 by iounejja          #+#    #+#              #
-#    Updated: 2021/02/10 15:14:45 by ychennaf         ###   ########.fr        #
+#    Updated: 2021/02/11 18:37:22 by ychennaf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 EXEC = minishell
 NAME = minishell.a
 SRCS = utils/ft_strcmp.c \
-		utils/lst_file_add_back.c \
 		utils/lst_file_new.c \
+		utils/lst_file_add_back.c \
+		utils/table_utils.c \
 		parsing/parse.c \
 		parsing/parse_simple.c \
 		parsing/get_env.c \
@@ -25,13 +26,18 @@ SRCS = utils/ft_strcmp.c \
 		parsing/handle_cmd.c \
 		parsing/fill_line.c \
 		executing/check_commands.c \
-		executing/table_utils.c \
-		executing/pwd.c \
-		executing/cd.c \
-		executing/env.c \
-		executing/export.c \
-		executing/execute_command.c \
-		executing/exit.c
+		executing/command_utils.c \
+		executing/check_and_execute.c \
+		executing/files_handling.c \
+		executing/env_var_utils.c \
+		executing/execute_commands.c \
+		executing/built-in/pwd.c \
+		executing/built-in/cd.c \
+		executing/built-in/env.c \
+		executing/built-in/export.c \
+		executing/built-in/exit.c \
+		executing/built-in/echo.c \
+		executing/built-in/unset.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
@@ -42,13 +48,14 @@ $(NAME): $(OBJS)
 		ar rcs $(NAME) $(OBJS) utils/libft/*.o
 
 %.o: %.c
-	gcc -c $< -o $@
+	gcc -c $< -o $@ -I .
 
 clean:
 	rm -rf *.o
 	rm -rf utils/*.o
 	rm -rf parsing/*.o
 	rm -rf executing/*.o
+	rm -rf executing/built-in/*.o
 	cd utils/libft &&  make clean
 
 fclean: clean

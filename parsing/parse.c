@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 15:21:27 by ychennaf          #+#    #+#             */
-/*   Updated: 2021/02/11 17:10:54 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/11 18:58:05 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int		check_line(char *line)
 			{
 				if ((line[i] == type && type == '"' && line[i - 1] != '\\') || (line[i] == type && type == '\''))//(line[i] == type && type == '"' && line[i - 1] != '\\') || (line[i] == type && type == '\'')
 				{
-					printf("|%d|\n",i);
 					check++;
 					i++;
 					break;
@@ -92,21 +91,14 @@ int		check_line(char *line)
 	return (0);
 }
 
-int		get_command(char *line, char **env, t_cmd *cmd, char **tab2) //echo "hello $USER test allah"
+int		get_command(char **env, t_cmd *cmd, char **tab2) //echo "hello $USER test allah"
 {
-	// char	*tmp;
 	int		i;
 	int		q;
 	int		j;
 
 	i = 1;
 	init_cmd(cmd);
-	// if (check_line(line) == 1)
-	// 	return (0);
-	// tab2 = fill_tab2(line);
-	// printf("i = |%d|\n", i);
-	// printf("l = |%d|\n" ,size_q(line, env, &i, '\''));
-	// printf("i = |%d|\n", i);
 	while (tab2[g_t])
 	{
 		if (check_end_cmd(cmd, tab2, env) == 1)
@@ -119,65 +111,6 @@ int		get_command(char *line, char **env, t_cmd *cmd, char **tab2) //echo "hello 
 		// 	;
 		// printf("tab = |%s|\n", tab2[g_t]);
 	}
-	// printf("khrej\n");
-	// cmd = NULL;
-	// i = g_i;
-	// while(line[g_i] != '\0')
-	// {
-	// 	// printf("g_i = %d\n", g_i);
-	// 	q = 0;
-	// 	if (line[g_i] == ' ')
-	// 		g_i += skip_spaces(line, g_i);
-	// 	if (line[g_i] == '|')
-	// 	{
-	// 		cmd->type = PIPE;
-	// 		g_i++;
-	// 		break;
-	// 	}
-	// 	else if (line[g_i] == ';')
-	// 	{
-	// 		cmd->type = END;
-	// 		g_i++;
-	// 		break;
-	// 	}
-	// 	else if (line[g_i] != ' ')
-	// 		q = get_simple_s(line, cmd, env); //add_lsdoll(env, line, cmd); //ATTENTION $$$$$$$
-	// 	// else if (line[g_i] == '\'' || line[g_i] == '\"')
-	// 	// 	q = get_simple_s(line, cmd, env);
-	// 	// else
-	// 	// 	 q = get_simple_s(line, cmd, env);
-	// 	if (q == 1)
-	// 		printf("multiple command line\n");
-	// 	g_i++;
-		
-	// }
-	// // ft_putendl_fd("OK",1);
-	// // cmd = NULL;
-	// t_list *test;
-	// t_file *tmp;
-
-	// test = cmd->cmds;
-	// while(cmd->cmds != NULL)
-	// {
-	// 	// printf("cmds = %s\n", cmd->cmds->content);
-	// 	ft_putstr_fd("|",1);
-	// 	ft_putstr_fd(cmd->cmds->content,1);
-	// 	ft_putendl_fd("|",1);
-	// 	cmd->cmds = cmd->cmds->next;
-	// }
-	// cmd->cmds = test;
-	// tmp = cmd->files;
-	// while(cmd->files != NULL)
-	// {
-	// 	ft_putstr_fd("file \n|",1);
-	// 	ft_putstr_fd(cmd->files->file,1);
-	// 	ft_putstr_fd("| -- ",1);
-	// 	ft_putendl_fd(ft_itoa(cmd->files->type),1);
-	// 	cmd->files = cmd->files->next;
-	// }
-	// cmd->files = tmp;
-	// free_commands(cmd);
-	// tmp = ft_substr(line, i, g_i - i);
 	return (2);
 }
 

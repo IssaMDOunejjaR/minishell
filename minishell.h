@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:42:06 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/11 18:05:07 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/11 18:43:23 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,15 @@
 # include "utils/libft/libft.h"
 
 char	*g_cwd;
-int		g_error_value;
 char	*g_old_pwd;
-int		g_i;
-int		g_t;
 char	*g_latest_cmd;
+int		g_error_value;
+int		g_t;
+int		g_i;
+int		g_prev_fd_read;
+int		g_prev_type;
+
+int		test;
 
 typedef enum 	s_type
 {
@@ -47,7 +51,7 @@ typedef struct	s_file
 {
 	char	*file;
 	t_type	type;
-	struct s_file *next;
+	struct	s_file *next;
 }				t_file;
 
 typedef struct	s_cmd
@@ -56,10 +60,11 @@ typedef struct	s_cmd
 	t_file	*files;
 	t_type	type;
 }				t_cmd;
+
 // Parsing
 t_file  *lst_file_new(char *file, t_type type);
 void    lst_file_add_back(t_file **alst, t_file *new);
-int		get_command(char *line, char **env, t_cmd *cmd, char **tab2);
+int		get_command(char **env, t_cmd *cmd, char **tab2);
 char	*get_env(char **env, char *line);
 int		get_simple_s(char *line, t_cmd *cmd, char **env);
 int		ft_strcmp(char *s1, char *s2);
@@ -92,20 +97,44 @@ char	*fill_d(char *line, char **env, int *i);
 int		check_backslash(char c);
 
 // Executing Section
-void	check_command(t_cmd *cmd, char **env);
+char	**get_commands(t_cmd *cmd, char **env, char *line);
+char	**execute_commands(t_cmd *cmd, char **env, char **tab);
+char	**check_command(t_cmd *cmd, char **env);
+void	check_if_file_executable(t_cmd *cmd, char **env);
+void	command_is_valid(t_cmd *cmd, char **env);
+void	command_exe(t_cmd *cmd, char **env);
+int		check_built_in(t_cmd *cmd);
+char	**exec_built_in(t_cmd *cmd, char **env);
+char	**execute_commands(t_cmd *cmd, char **env, char **tab);
+
+
 void	free_table(char **tab);
 int		table_len_2d(char **tab);
 char	**sort_table_2d(char **tab);
 char	**copy_table_2d(char **tab);
 char	**tab_join(char **tab, char *line);
+t_file	*lst_file_new(char *file, t_type type);
+void	lst_file_add_back(t_file **alst, t_file *new);
+void	free_commands(t_cmd *cmd);
+t_list	*check_more_args(t_cmd *cmd);
+int		is_all_num(char *str);
+
+char	**init_global(char **env);
+int		find_env_var(char **env, char *env_var);
 char	*get_current_working_directory();
-void	change_directory(t_cmd *cmd);
-void	print_cwd();
-void	print_env(char **env);
+char	**change_directory(t_cmd *cmd, char **env);
+void	print_pwd();
 char	*get_env_var(char **env, char *name);
-char    **convert_env(char **env);
-void    execute_command(t_cmd *cmd);
-void	get_commands(t_cmd *cmd, char **env);
-void	exit_shell();
+void	exit_shell(t_cmd *cmd, char **env);
+void	ft_echo(t_cmd *cmd);
+char    **ft_export(t_cmd *cmd, char **env);
+int		check_files(t_cmd *cmd);
+char	**ft_unset(t_cmd *cmd, char **env);
+void    print_export(char **env);
+char	**delete_env_var(char **env, char *env_var);
+char	**change_env_var(char *env_var, char **env);
+int		check_special_carac(char *str);
+void	print_error(char *command, char *content, char *error);
+void	print_env(char **env);
 
 #endif

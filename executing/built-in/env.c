@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: issamdounejjar <issamdounejjar@student.    +#+  +:+       +#+        */
+/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/17 15:48:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/01/22 18:23:56 by issamdounej      ###   ########.fr       */
+/*   Created: 2021/01/17 17:10:03 by iounejja          #+#    #+#             */
+/*   Updated: 2021/02/11 11:10:11 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-void	exit_shell()
+void	print_env(char **env)
 {
-    ft_putendl_fd("exit", 1);
-    // free cmd
-	free(g_cwd);
-    exit(0);
+	int i;
+
+	i = 0;
+	while (env[i] != NULL)
+	{
+		ft_putendl_fd(env[i], 1);
+		i++;
+	}
 }
