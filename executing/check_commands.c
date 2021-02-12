@@ -6,13 +6,13 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 18:17:54 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/11 18:48:05 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/12 17:19:52 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_if_exist(t_cmd *cmd, char **env, char **env_path, int i)
+void	execute_if_exist(t_cmd *cmd, char **env_path, int i)
 {
 	char		*command;
 	char		*tmp;
@@ -26,13 +26,13 @@ void	execute_if_exist(t_cmd *cmd, char **env, char **env_path, int i)
 	cmd->cmds->content = ft_strdup(command);
 	free(tmp);
 	if (stat(cmd->cmds->content, &sb) == 0 && sb.st_mode & S_IXUSR)
-		command_exe(cmd, env);
+		command_exe(cmd, g_env);
 	else
 		print_error(cmd->cmds->content, NULL, "Permission denied");
 	free_table(env_path);
 }
 
-int		check_directories(t_cmd *cmd, char **env, char **env_path, int i)
+int		check_directories(t_cmd *cmd, char **env_path, int i)
 {
 	DIR				*rep;
 	struct dirent	*read_dir;
@@ -47,7 +47,7 @@ int		check_directories(t_cmd *cmd, char **env, char **env_path, int i)
 	{
 		if (ft_strcmp(read_dir->d_name, cmd->cmds->content) == 0)
 		{
-			execute_if_exist(cmd, env, env_path, i);
+			execute_if_exist(cmd,  env_path, i);
 			closedir(rep);
 			return (1);
 		}
@@ -67,12 +67,12 @@ void	command_is_valid(t_cmd *cmd, char **env)
 	char			*tmp;
 
 	i = 0;
-	tmp = get_env_var(env, "PATH");
+	tmp = get_env_var( "PATH");
 	env_path = ft_split(tmp, ':');
 	free(tmp);
 	while (env_path[i] != NULL)
 	{
-		if (check_directories(cmd, env, env_path, i) == 1)
+		if (check_directories(cmd,  env_path, i) == 1)
 			return ;
 		i++;
 	}
@@ -93,13 +93,13 @@ void	check_if_file_executable(t_cmd *cmd, char **env)
 		return ;
 	}
 	if (stat(cmd->cmds->content, &sb) == 0 && sb.st_mode & S_IXUSR)
-		command_exe(cmd, env);
+		command_exe(cmd, g_env);
 	else
 		print_error(cmd->cmds->content, NULL, "Permission denied");
 	close(fd);
 }
 
-char	**get_commands(t_cmd *cmd, char **env, char *line)
+char	**get_commands(t_cmd *cmd, char *line)
 {
 	char	**tab;
 
@@ -108,8 +108,8 @@ char	**get_commands(t_cmd *cmd, char **env, char *line)
 	else
 	{
 		tab = fill_tab2(line);
-		env = execute_commands(cmd, env, tab);
+		g_env = execute_commands(cmd,  tab);
 		free_table(tab);
 	}
-	return (env);
+	return (g_env);
 }

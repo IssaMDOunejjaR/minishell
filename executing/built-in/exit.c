@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 15:48:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/11 12:16:53 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/12 17:07:46 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static	void	free_and_exit(t_cmd *cmd, char **env)
 {
 	free(g_cwd);
 	free(g_latest_cmd);
-	free_table(env);
+	free_table(g_env);
 	free_commands(cmd);
 	exit(g_error_value);
 }
@@ -42,5 +42,5 @@ void			exit_shell(t_cmd *cmd, char **env)
 	}
 	cmd->cmds = tmp;
 	if (cmd->type != PIPE && g_prev_type != PIPE)
-		free_and_exit(cmd, env);
+		free_and_exit(cmd, g_env);
 }

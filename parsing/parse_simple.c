@@ -6,13 +6,13 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 17:45:06 by ychennaf          #+#    #+#             */
-/*   Updated: 2021/02/06 15:43:49 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/12 17:18:31 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		simple_length(char **env, int i, char *line)
+int		simple_length(int i, char *line)
 {
 	int		l;
 	char	type;
@@ -25,7 +25,7 @@ int		simple_length(char **env, int i, char *line)
 			printf(">>> 1 %d <<<\n", i);
 			i++;
 			printf(">>> 2 %d <<<\n", i);
-			l += get_env_length(env, line, i);
+			l += get_env_length( line, i);
 			printf(">>> 3 %d <<<\n", i);
 			i += value_doll_length(line, i);
 			printf(">>> 4 %d <<<\n", i);
@@ -35,7 +35,7 @@ int		simple_length(char **env, int i, char *line)
 			// printf("ok %d\n", i);
 			type = line[i]
 ;			i++;
-			l += quotes_length(env, i, line, line[i - 1]) - 1;
+			l += quotes_length( i, line, line[i - 1]) - 1;
 			ft_putstr_fd("i = ",1);
 			ft_putendl_fd(ft_itoa(i), 1);
 			ft_putstr_fd("l = ",1);
@@ -57,7 +57,7 @@ int		simple_length(char **env, int i, char *line)
 	return (l);
 }
 
-char	*quotes_in_s(char **env, char type, char *line)
+char	*quotes_in_s(char type, char *line)
 {
 	char	*tmp;
 	int		i;
@@ -67,7 +67,7 @@ char	*quotes_in_s(char **env, char type, char *line)
 	
 	// g_i++;
 	i = 0;
-	ret_q = ft_calloc((quotes_length(env, g_i, line, type) + 1), sizeof(char));
+	ret_q = ft_calloc((quotes_length( g_i, line, type) + 1), sizeof(char));
 	// printf("ok\n");
 	// printf("ret_q = |%zu|\n",ft_strlen(ret_q));
 	ft_putstr_fd("ret_q = ", 1);
@@ -82,7 +82,7 @@ char	*quotes_in_s(char **env, char type, char *line)
 			printf("im here 3 = %c -- i = %d\n", line[g_i], g_i);
 			tmp = value_doll(line, g_i);
 			// printf("tmp = |%s|\n",tmp);
-			value_env = get_env_var(env, tmp);
+			value_env = get_env_var( tmp);
 			// printf("value_env = |%s|\n",value_env);
 			g_i += ft_strlen(tmp);
 			// printf("tmp l = %zu\n", ft_strlen(tmp));
@@ -124,8 +124,8 @@ int	get_simple_s(char *line, t_cmd *cmd, char **env)
 	
 	// g_i++;
 	i = 0;
-	ret_q = malloc((simple_length(env, g_i, line) + 1) *  sizeof(char));
-	// printf("ret_q strlen = %d\n",(simple_length(env, g_i, line)));
+	ret_q = malloc((simple_length( g_i, line) + 1) *  sizeof(char));
+	// printf("ret_q strlen = %d\n",(simple_length( g_i, line)));
 	while (line[g_i] != '\0' && line[g_i] != ' ')
 	{
 		j = 0;
@@ -136,14 +136,14 @@ int	get_simple_s(char *line, t_cmd *cmd, char **env)
 			printf("im here = %c\n", line[g_i]);
 			if (check_between_quotes(g_i, line, line[g_i - 1]))
 				return (1);
-			tmp = quotes_in_s(env, line[g_i - 1], line);
+			tmp = quotes_in_s( line[g_i - 1], line);
 			while (tmp[j])
 				ret_q[i++] = tmp[j++];
 			free(tmp);
 			// printf("im here 2= %c\n", line[g_i]);
 			ft_putstr_fd("bbbbb = ",1);
 			ft_putendl_fd(ft_itoa(g_i), 1);
-			g_i += quotes_length(env, g_i, line, line[g_i - 1]);
+			g_i += quotes_length( g_i, line, line[g_i - 1]);
 			ft_putstr_fd("bbbbb = ",1);
 			ft_putendl_fd(ft_itoa(g_i), 1);
 			ft_putendl_fd("teteteteetete", 1);
@@ -155,7 +155,7 @@ int	get_simple_s(char *line, t_cmd *cmd, char **env)
 			g_i++;
 			tmp = value_doll(line, g_i);
 			// printf("tmp = |%s|\n",tmp);
-			value_env = get_env_var(env, tmp);
+			value_env = get_env_var( tmp);
 			// printf("value_env = |%s|\n",value_env);
 			g_i += ft_strlen(tmp);
 			// printf("tmp l = %zu\n", ft_strlen(tmp));

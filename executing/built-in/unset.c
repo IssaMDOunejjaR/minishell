@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 14:33:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/11 11:09:55 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/12 17:16:49 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**delete_env_var(char **env, char *env_var)
+char	**delete_env_var(char *env_var)
 {
 	int		i;
 	int		j;
@@ -23,13 +23,13 @@ char	**delete_env_var(char **env, char *env_var)
 	i = 0;
 	j = 0;
 	var = ft_split(env_var, '=');
-	new_env = malloc(sizeof(char*) * (table_len_2d(env)));
-	while (env[i] != NULL)
+	new_env = malloc(sizeof(char*) * (table_len_2d(g_env)));
+	while (g_env[i] != NULL)
 	{
-		tmp = ft_split(env[i], '=');
+		tmp = ft_split(g_env[i], '=');
 		if (ft_strcmp(tmp[0], var[0]) != 0)
 		{
-			new_env[j] = ft_strdup(env[i]);
+			new_env[j] = ft_strdup(g_env[i]);
 			j++;
 		}
 		free_table(tmp);
@@ -53,17 +53,17 @@ char	**ft_unset(t_cmd *cmd, char **env)
 		{
 			print_error("unset", cmd->cmds->content, "not a valid identifier");
 			cmd->cmds = tmp_lst;
-			return (env);
+			return (g_env);
 		}
-		if (find_env_var(env, cmd->cmds->content) == 1 &&
+		if (find_env_var( cmd->cmds->content) == 1 &&
 		cmd->type != PIPE && g_prev_type != PIPE)
 		{
-			tmp = env;
-			env = delete_env_var(env, cmd->cmds->content);
+			tmp = g_env;
+			g_env = delete_env_var( cmd->cmds->content);
 			free_table(tmp);
 		}
 		cmd->cmds = cmd->cmds->next;
 	}
 	cmd->cmds = tmp_lst;
-	return (env);
+	return (g_env);
 }

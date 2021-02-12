@@ -6,7 +6,7 @@
 #    By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/09 14:57:18 by iounejja          #+#    #+#              #
-#    Updated: 2021/02/11 18:37:22 by ychennaf         ###   ########.fr        #
+#    Updated: 2021/02/12 15:40:10 by ychennaf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,9 @@ SRCS = utils/ft_strcmp.c \
 		parsing/check_line.c \
 		parsing/handle_line.c \
 		parsing/handle_cmd.c \
+		parsing/handle_cmd2.c \
 		parsing/fill_line.c \
+		parsing/fill_line2.c \
 		executing/check_commands.c \
 		executing/command_utils.c \
 		executing/check_and_execute.c \

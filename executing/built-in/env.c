@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 17:10:03 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/11 11:10:11 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/12 17:07:27 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	print_env(char **env)
 	int i;
 
 	i = 0;
-	while (env[i] != NULL)
+	while (g_env[i] != NULL)
 	{
-		ft_putendl_fd(env[i], 1);
+		ft_putendl_fd(g_env[i], 1);
 		i++;
 	}
 }

@@ -6,11 +6,19 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:32:47 by ychennaf          #+#    #+#             */
-/*   Updated: 2021/02/11 17:59:13 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/12 11:32:18 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int		skip_spaces(char *line, int i)
+{
+	while (line[i] == ' ' || line[i] == '\t' || line[i] == '\r'
+		|| line[i] == '\n' || line[i] == '\f' || line[i] == '\v')
+		i++;
+	return (i);
+}
 
 int		is_charm(char c)
 {
@@ -19,10 +27,9 @@ int		is_charm(char c)
 	return (0);
 }
 
-int		check_pipe(char *line , int i)
+int		check_pipe(char *line, int i)
 {
 	i++;
-	
 	while (line[i])
 	{
 		if (line[i] == '|' || line[i] == ';')
@@ -40,8 +47,7 @@ int		check_app(char *line, int i)
 
 	j = 0;
 	i++;
-
-	while(line[i] == '>')
+	while (line[i] == '>')
 	{
 		i++;
 		j++;

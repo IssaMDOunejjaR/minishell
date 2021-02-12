@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 15:12:26 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/11 18:41:35 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/12 17:14:56 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	print_prompt(void)
 		ft_putstr_fd("\e[1;92m~> ", 1);
 	else
 		ft_putstr_fd("\e[1;91m~> ", 1);
-	ft_putstr_fd("\e[1;96mminishell \e[1;94m( \e[1;93m", 1);
+	ft_putstr_fd("\e[1;96mminishell \e[1;94m(\e[1;93m", 1);
 	ft_putstr_fd(g_cwd, 1);
-	ft_putstr_fd("\e[1;94m )", 1);
+	ft_putstr_fd("\e[1;94m)", 1);
 	ft_putstr_fd("\e[1;91m /# \e[0m", 1);
 }
 
@@ -67,7 +67,7 @@ void	handle_ctrl_d(char *line, char **env)
 	ft_putendl_fd("exit", 1);
 	free(line);
 	free(g_cwd);
-	free_table(env);
+	free_table(g_env);
 	free(g_latest_cmd);
 	exit(g_error_value);
 }
@@ -82,16 +82,16 @@ int     main()
 
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
-	env = copy_table_2d(environ);
-	env = init_global(env);
+	g_env = copy_table_2d(environ);
+	g_env = init_global(g_env);
 	while (1)
 	{
 		print_prompt();
 		line = ft_read_line();
 		if (!line)
-			handle_ctrl_d(line, env);
+			handle_ctrl_d(line, g_env);
 		if (ft_strcmp(line, "") != 0)
-			env = get_commands(&cmd, env, line);
+			g_env = get_commands(&cmd,  line);
 		free(g_cwd);
 		free(line);
 	}

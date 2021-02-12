@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 18:35:20 by ychennaf          #+#    #+#             */
-/*   Updated: 2021/02/11 18:28:58 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/12 17:17:11 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,31 @@ int		check_backslash(char c)
 	return (0);
 }
 
-int		size_q_b(char *line, char **env, int i, char type)
+int		size_q_b2(char *line, int i, char type, int *l)
+{
+	if (line[i] == '\\' && check_backslash(line[i + 1]) == 1
+		&& type == '"')
+		i++;
+	if (line[i] && (check_backslash(line[i]) == 0
+		|| line[i - 1] != '\\' || type == '"'))
+		(*l)++;
+	i++;
+	return (i);
+}
+
+int		size_q_b(char *line, int i, char type)
 {
 	int		l;
-	
+
 	l = 0;
-	while (line[i] && line[i] != type)//((line[i] != type && type == '"' && line[i - 1] != '\\') || (line[i] != type && type == '\''))
+	while (line[i] && line[i] != type)
 	{
 		if (line[i] == '$' && type == '"' && line[i - 1] != '\\')
 		{
-			i++;
-			l += get_env_length(env, line, i);
+			l += get_env_length( line, ++i);
 			i += value_doll_length(line, i);
-		}else
+		}
+		else
 		{
 			if (line[i] != type && type == '\'')
 			{
@@ -39,27 +51,19 @@ int		size_q_b(char *line, char **env, int i, char type)
 				l++;
 			}
 			else
-			{
-				if (line[i] == '\\' && check_backslash(line[i + 1]) == 1 && type == '"')
-					i++;
-				if (line[i] && (check_backslash(line[i]) == 0 || line[i - 1] != '\\' || type == '"'))//line[i] && (check_backslash(line[i]) == 0 || line[i - 1] != '\\' || type == '"')
-					l++;
-				i++;
-				
-			}
+				i = size_q_b2(line, i, type, &l);
 		}
 	}
 	return (l);
 }
 
-char	*fill_d(char *line, char **env, int *i)
+char	*fill_d(char *line, int *i)
 {
 	char	*ret;
 	char	*tmp;
 	char	*vl_env;
 	int		j;
 
-	// printf("t");
 	j = 0;
 	if (line[*i] == '?')
 	{
@@ -72,27 +76,17 @@ char	*fill_d(char *line, char **env, int *i)
 		return (ft_strdup(""));
 	}
 	tmp = value_doll(line, *i);
-	*i += ft_strlen(tmp);
-	if (ft_strcmp(tmp, "OLDPWD") == 0)
-		vl_env = ft_strdup(g_old_pwd);
-	else if (ft_strcmp(tmp, "_") == 0)
-		vl_env = ft_strdup(g_latest_cmd);
-	else
-		vl_env = get_env_var(env, tmp);
+	vl_env = fill_d2(tmp,  i);
 	ret = ft_calloc(ft_strlen(vl_env) + 1, sizeof(char));
-	while(vl_env[j])
-	{
-		ret[j] = vl_env[j];
-		j++;
-	}
-	if (ft_strcmp(tmp, "") == 0 && line[*i] != '"' && line[*i] != '$' && line[*i] != '\'')
+	fill_ret(vl_env, ret, &j);
+	if (ft_strcmp(tmp, "") == 0 && line[*i] != '"'
+		&& line[*i] != '$' && line[*i] != '\'')
 		ret[j++] = '$';
-	free(tmp);
-	free(vl_env);
+	free2(tmp, vl_env);
 	return (ret);
 }
 
-char	*fill_q(char *line, char **env, int *i, char type)
+char	*fill_q(char *line, int *i, char type)
 {
 	char	*ret;
 	int		j;
@@ -101,9 +95,9 @@ char	*fill_q(char *line, char **env, int *i, char type)
 	int		k;
 
 	j = *i;
-	ret = ft_calloc(size_q_b(line, env, j, line[j - 1]) + 1, sizeof(char));
+	ret = ft_calloc(size_q_b(line,  j, line[j - 1]) + 1, sizeof(char));
 	k = 0;
-	while (line[*i] && line[*i] != type)//((line[*i] != type || type == '"' || line[*i - 1] != '\\') || (line[*i] != type || type == '\''))
+	while (line[*i] && line[*i] != type)
 	{
 		j = 0;
 		if (line[*i] == '$' && type == '"' && line[*i - 1] != '\\')
@@ -119,27 +113,18 @@ char	*fill_q(char *line, char **env, int *i, char type)
 			else
 			{
 				tmp = value_doll(line, *i);
-				if (ft_strcmp(tmp, "OLDPWD") == 0)
-					vl_env = ft_strdup(g_old_pwd);
-				else if (ft_strcmp(tmp, "_") == 0)
-					vl_env = ft_strdup(g_latest_cmd);
-				else
-					vl_env = get_env_var(env, tmp);
-				*i += ft_strlen(tmp);
+				vl_env = fill_d2(tmp,  i);
 				while (vl_env[j])
 					ret[k++] = vl_env[j++];
 				if (ft_strcmp(tmp, "") == 0)
 					ret[k++] = '$';
-				free(vl_env);
-				free(tmp);	
+				free2(tmp, vl_env);
 			}
 		}
 		else
 		{
 			if (line[*i] != type && type == '\'')
-			{
 				ret[k++] = line[(*i)++];
-			}
 			else
 			{
 				if (line[*i] == '\\' && check_backslash(line[*i + 1]) == 1 && type == '"')
@@ -148,7 +133,6 @@ char	*fill_q(char *line, char **env, int *i, char type)
 					ret[k++] = line[*i];
 				(*i)++;
 			}
-			
 		}
 	}
 	*i = *i + 1;

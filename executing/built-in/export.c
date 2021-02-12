@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 09:55:03 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/11 11:10:01 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/12 17:16:04 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ static	char	**convert_env(char **env)
 	char	**tmp;
 	char	*tmp2;
 
-	new = malloc(sizeof(char*) * (table_len_2d(env) + 1));
-	tmp = sort_table_2d(env);
+	new = malloc(sizeof(char*) * (table_len_2d(g_env) + 1));
+	tmp = sort_table_2d(g_env);
 	i = 0;
 	while (tmp[i] != NULL)
 	{
@@ -68,7 +68,7 @@ void			print_export(char **env)
 	int		i;
 	char	**new_env;
 
-	new_env = convert_env(env);
+	new_env = convert_env(g_env);
 	i = 0;
 	while (new_env[i] != NULL)
 	{
@@ -88,13 +88,13 @@ char			**ft_export(t_cmd *cmd, char **env)
 	{
 		while (cmd->cmds != NULL)
 		{
-			if (find_env_var(env, cmd->cmds->content) == 1)
-				env = change_env_var(cmd->cmds->content, env);
+			if (find_env_var( cmd->cmds->content) == 1)
+				g_env = change_env_var(cmd->cmds->content, g_env);
 			else
-				env = tab_join(env, cmd->cmds->content);
+				g_env = tab_join(g_env, cmd->cmds->content);
 			cmd->cmds = cmd->cmds->next;
 		}
 	}
 	cmd->cmds = tmp;
-	return (env);
+	return (g_env);
 }

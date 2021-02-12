@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 17:57:31 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/11 19:22:11 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/12 17:15:42 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static	int		parent_process(t_cmd *cmd, pid_t id, int pipe_fd[2])
 	return (fd);
 }
 
-static	void	child_process(t_cmd *cmd, char **env, int fd, int pipe_fd[2])
+static	void	child_process(t_cmd *cmd, int fd, int pipe_fd[2])
 {
 	if (dup2(fd, 0) == -1)
 		ft_putendl_fd(strerror(errno), 1);
@@ -103,10 +103,10 @@ static	void	child_process(t_cmd *cmd, char **env, int fd, int pipe_fd[2])
 		if (dup2(pipe_fd[1], 1) == -1)
 			ft_putendl_fd(strerror(errno), 1);
 	}
-	check_command(cmd, env);
+	check_command(cmd, g_env);
 }
 
-static	int		execute_proccess(t_cmd *cmd, char **env, int fd, int pipe_fd[2])
+static	int		execute_proccess(t_cmd *cmd, int fd, int pipe_fd[2])
 {
 	pid_t	id;
 
@@ -116,7 +116,7 @@ static	int		execute_proccess(t_cmd *cmd, char **env, int fd, int pipe_fd[2])
 		ft_putendl_fd(strerror(errno), 1);
 	else if (id == 0)
 	{
-		child_process(cmd, env, fd, pipe_fd);
+		child_process(cmd,  fd, pipe_fd);
 		exit(g_error_value);
 	}
 	else
@@ -136,16 +136,16 @@ char			**init_global(char **env)
 	g_error_value = 0;
 	g_latest_cmd = ft_strdup("minishell");
 	g_old_pwd = ft_strdup("");
-	env = change_env_var("OLDPWD", env);
-	tmp = get_env_var(env, "SHLVL");
+	g_env = change_env_var("OLDPWD", g_env);
+	tmp = get_env_var( "SHLVL");
 	shell_lvl = ft_atoi(tmp) + 1;
 	free(tmp);
 	tmp = ft_itoa(shell_lvl);
 	new_shellvl = ft_strjoin("SHLVL=", tmp);
 	free(tmp);
-	env = change_env_var(new_shellvl, env);
+	g_env = change_env_var(new_shellvl, g_env);
 	free(new_shellvl);
-	return (env);
+	return (g_env);
 }
 
 void			get_latest_cmd(t_cmd *cmd)
@@ -168,7 +168,7 @@ void			get_latest_cmd(t_cmd *cmd)
 	cmd->cmds = tmp;
 }
 
-char			**execute_commands(t_cmd *cmd, char **env, char **tab)
+char			**execute_commands(t_cmd *cmd, char **tab)
 {
 	int		pipe_fd[2];
 	int		fd;
@@ -181,7 +181,7 @@ char			**execute_commands(t_cmd *cmd, char **env, char **tab)
 	g_prev_type = END;
 	g_i = 0;
 	g_t = 0;
-	while ((ret = get_command(env, cmd, tab)))
+	while ((ret = get_command( cmd, tab)))
 	{
 		// tmp = cmd->cmds;
 		// while (cmd->cmds != NULL)
@@ -192,14 +192,14 @@ char			**execute_commands(t_cmd *cmd, char **env, char **tab)
 		// cmd->cmds = tmp;
 		cmd->cmds = check_more_args(cmd);
 		if (check_built_in(cmd))
-			env = exec_built_in(cmd, env);
+			g_env = exec_built_in(cmd, g_env);
 		else
-			fd = execute_proccess(cmd, env, fd, pipe_fd);
+			fd = execute_proccess(cmd,  fd, pipe_fd);
 		get_latest_cmd(cmd);
 		free_commands(cmd);
 		g_prev_type = cmd->type;
 		if (ret == 2)
 			break ;
 	}
-	return (env);
+	return (g_env);
 }

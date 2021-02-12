@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 17:43:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/11 11:16:39 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/12 17:20:09 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char				*get_env_var(char **env, char *name)
+char				*get_env_var(char *name)
 {
 	int		i;
 	char	**tmp;
 	char	*value;
 
 	i = 0;
-	while (env[i] != NULL)
+	while (g_env[i] != NULL)
 	{
-		tmp = ft_split(env[i], '=');
+		tmp = ft_split(g_env[i], '=');
 		if (ft_strcmp(tmp[0], name) == 0)
 		{
 			value = ft_strdup(tmp[1]);
@@ -34,7 +34,7 @@ char				*get_env_var(char **env, char *name)
 	return (ft_strdup(""));
 }
 
-int					find_env_var(char **env, char *env_var)
+int					find_env_var(char *env_var)
 {
 	int		i;
 	char	**tmp;
@@ -42,9 +42,9 @@ int					find_env_var(char **env, char *env_var)
 
 	i = 0;
 	var = ft_split(env_var, '=');
-	while (env[i] != NULL)
+	while (g_env[i] != NULL)
 	{
-		tmp = ft_split(env[i], '=');
+		tmp = ft_split(g_env[i], '=');
 		if (ft_strcmp(var[0], tmp[0]) == 0)
 		{
 			free_table(var);
@@ -62,11 +62,11 @@ char				**change_env_var(char *env_var, char **env)
 {
 	char	**tmp;
 
-	tmp = env;
-	env = delete_env_var(env, env_var);
-	env = tab_join(env, env_var);
+	tmp = g_env;
+	g_env = delete_env_var( env_var);
+	g_env = tab_join(g_env, env_var);
 	free_table(tmp);
-	return (env);
+	return (g_env);
 }
 
 static	t_list		*add_more_args(t_cmd *cmd, char **tmp)

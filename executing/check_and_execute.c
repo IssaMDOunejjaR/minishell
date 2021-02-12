@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_and_execute.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 15:21:55 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/11 15:21:59 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/12 17:03:22 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,23 @@ char			**check_command(t_cmd *cmd, char **env)
 
 	if (cmd->files != NULL)
 		if (check_files(cmd) == 1)
-			return (env);
+			return (g_env);
 	if (cmd->cmds == NULL)
-		return (env);
+		return (g_env);
 	tmp = cmd->cmds->content;
 	if (tmp[0] == '.' || tmp[0] == '/')
-		check_if_file_executable(cmd, env);
+		check_if_file_executable(cmd, g_env);
 	else if (ft_strcmp(tmp, "echo") == 0)
 		ft_echo(cmd);
 	else if (ft_strcmp(tmp, "pwd") == 0)
 		print_pwd();
 	else if (ft_strcmp(tmp, "env") == 0)
-		print_env(env);
+		print_env(g_env);
 	else if (ft_strcmp(tmp, "export") == 0)
-		print_export(env);
+		print_export(g_env);
 	else
-		command_is_valid(cmd, env);
-	return (env);
+		command_is_valid(cmd, g_env);
+	return (g_env);
 }
 
 int				check_built_in(t_cmd *cmd)
@@ -71,18 +71,18 @@ char			**exec_built_in(t_cmd *cmd, char **env)
 {
 	if (cmd->files != NULL)
 		if (check_files(cmd) == 1)
-			return (env);
+			return (g_env);
 	if (cmd->cmds == NULL)
-		return (env);
+		return (g_env);
 	if (ft_strcmp(cmd->cmds->content, "cd") == 0)
-		env = change_directory(cmd, env);
+		g_env = change_directory(cmd, g_env);
 	else if (ft_strcmp(cmd->cmds->content, "export") == 0)
-		env = ft_export(cmd, env);
+		g_env = ft_export(cmd, g_env);
 	else if (ft_strcmp(cmd->cmds->content, "unset") == 0)
-		env = ft_unset(cmd, env);
+		g_env = ft_unset(cmd, g_env);
 	else if (ft_strcmp(cmd->cmds->content, "exit") == 0)
-		exit_shell(cmd, env);
-	return (env);
+		exit_shell(cmd, g_env);
+	return (g_env);
 }
 
 void			command_exe(t_cmd *cmd, char **env)
@@ -92,6 +92,6 @@ void			command_exe(t_cmd *cmd, char **env)
 
 	command = cmd->cmds->content;
 	args = get_args(cmd);
-	if (execve(command, args, env) != 0)
+	if (execve(command, args, g_env) != 0)
 		g_error_value = 1;
 }

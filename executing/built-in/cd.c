@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 17:17:00 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/11 11:10:17 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/12 17:15:59 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@ static	char	**set_oldpwd(char **env)
 	char	*env_var;
 
 	env_var = ft_strjoin("OLDPWD=", g_old_pwd);
-	env = change_env_var(env_var, env);
+	g_env = change_env_var(env_var, g_env);
 	free(env_var);
-	return (env);
+	return (g_env);
 }
 
-static	char	**get_oldpwd(char **env, char *oldpwd)
+static	char	**get_oldpwd(char *oldpwd)
 {
 	free(g_old_pwd);
 	g_old_pwd = ft_strdup(oldpwd);
-	if (find_env_var(env, "OLDPWD") == 1)
-		env = set_oldpwd(env);
-	return (env);
+	if (find_env_var( "OLDPWD") == 1)
+		g_env = set_oldpwd(g_env);
+	return (g_env);
 }
 
 static	char	*get_tmp(t_cmd *cmd)
@@ -44,7 +44,7 @@ char			**change_directory(t_cmd *cmd, char **env)
 	t_list	*tmp_lst;
 
 	if (cmd->type == PIPE || g_prev_type == PIPE)
-		return (env);
+		return (g_env);
 	tmp_lst = cmd->cmds;
 	oldpwd = getcwd(NULL, 0);
 	if (ft_lstsize(cmd->cmds) > 1)
@@ -57,9 +57,9 @@ char			**change_directory(t_cmd *cmd, char **env)
 		print_error("cd", tmp, NULL);
 	}
 	else
-		env = get_oldpwd(env, oldpwd);
+		g_env = get_oldpwd( oldpwd);
 	free(oldpwd);
 	free(tmp);
 	cmd->cmds = tmp_lst;
-	return (env);
+	return (g_env);
 }
