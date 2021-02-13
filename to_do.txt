@@ -5,3 +5,17 @@ echo $a $b
 1 - echo > test -n gdfg gdfg ls
 2 - echo $"hello"
 3 - $?
+echo $"USER$USER$"
+echo a="            test            "
+echo $USER$
+echo $USER$PATH
+echo '$'"$"'$'"$"
+echo "efefef\"fefef"
+echo "fekfheo\'$USER"
+ls >>>>>> a 
+-> $? && $OLDPWD
+
+-- export
+-- exit
+-- cd
+-- unset
