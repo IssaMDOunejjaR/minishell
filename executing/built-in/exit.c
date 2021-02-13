@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 15:48:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/12 17:07:46 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/13 14:45:42 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void			exit_shell(t_cmd *cmd, char **env)
 {
 	t_list *tmp;
 
+	g_error_value = 0;
 	tmp = cmd->cmds;
 	if (cmd->type != PIPE && g_prev_type != PIPE)
 		ft_putendl_fd("exit", 1);

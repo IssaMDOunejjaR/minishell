@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:42:06 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/12 17:12:47 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/13 16:48:21 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,23 +88,28 @@ int		check_semi(char *line, int i);
 int		skip_spaces(char *line, int i);
 char	**fill_tab2(char *line);
 char	*fill_tab(char *line);
-int		check_end_cmd(t_cmd *cmd, char **tab, char **env);
+int		check_end_cmd(t_cmd *cmd, char **tab);
 int		size_q(char *line, int *i, char type);
-int		size_line(char *line, char **env);
+int		size_line(char *line);
 void	handle_cmd(char *line, t_cmd *cmd);
-char	*handle_file(char *line, char **env);
+char	*handle_file(char *line);
 char	*fill_q(char *line, int *i, char type);
 char	*fill_d(char *line, int *i);
 int		check_backslash(char c);
 char	*fill_d2(char *tmp, int *i);
 void	fill_ret(char *vl_env, char *ret, int *j);
 void	free2(char *s1, char *s2);
-void	fill_q2(char *line, char type, int *i, int *k, char *ret);
+void	fill_q2(char *line, int *i, int *k, char *ret);
+int		size_q_b(char *line, int i, char type);
 int		size_q_b2(char *line, int i, char type, int *l);
 int		size_q2(char *line, int *i, char type);
 int		check_end_cmd2(t_cmd *cmd, char **tab);
 void	handle2(char *tmp, char *ret, int *j);
 int		fill_qd(char **tmp, char *line, int i);
+char	**tab_join_f(char **tab, char *line);
+char	*alloc_q(int *k, int *i, char *ret, char *line);
+int		check_backslash2(char *line, int *i, char type);
+int		lenght_digit(int n);
 
 // Executing Section
 char	**get_commands(t_cmd *cmd, char *line);

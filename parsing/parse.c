@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 15:21:27 by ychennaf          #+#    #+#             */
-/*   Updated: 2021/02/12 17:18:33 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/13 16:46:32 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ static	int		check_line2(char *line, int *i)
 int				check_line(char *line)
 {
 	int		i;
-	char	type;
 	int		check;
 
 	i = 0;
@@ -95,8 +94,6 @@ int				check_line(char *line)
 int				get_command(t_cmd *cmd, char **tab2)
 {
 	int		i;
-	int		q;
-	int		j;
 
 	i = 1;
 	init_cmd(cmd);
@@ -108,7 +105,7 @@ int				get_command(t_cmd *cmd, char **tab2)
 			&& ft_strcmp(tab2[g_t], ";")
 			&& ft_strcmp(tab2[g_t], "<")
 			&& ft_strcmp(tab2[g_t], ">>")))
-			handle_cmd(tab2[g_t++],  cmd);
+			handle_cmd(tab2[g_t++], cmd);
 	}
 	return (2);
 }

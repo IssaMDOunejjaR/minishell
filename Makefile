@@ -6,7 +6,7 @@
 #    By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/09 14:57:18 by iounejja          #+#    #+#              #
-#    Updated: 2021/02/12 15:40:10 by ychennaf         ###   ########.fr        #
+#    Updated: 2021/02/13 16:46:03 by ychennaf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,6 @@ SRCS = utils/ft_strcmp.c \
 		utils/lst_file_add_back.c \
 		utils/table_utils.c \
 		parsing/parse.c \
-		parsing/parse_simple.c \
 		parsing/get_env.c \
 		parsing/handle_quotes.c \
 		parsing/free_cmd.c \
@@ -27,6 +26,7 @@ SRCS = utils/ft_strcmp.c \
 		parsing/handle_cmd2.c \
 		parsing/fill_line.c \
 		parsing/fill_line2.c \
+		parsing/fill_line3.c \
 		executing/check_commands.c \
 		executing/command_utils.c \
 		executing/check_and_execute.c \
@@ -43,14 +43,14 @@ SRCS = utils/ft_strcmp.c \
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
-	gcc main.c $(NAME) -o $(EXEC)
+	gcc -Wall -Wextra -Werror main.c $(NAME) -o $(EXEC)
 
 $(NAME): $(OBJS)
 		cd utils/libft && make bonus
 		ar rcs $(NAME) $(OBJS) utils/libft/*.o
 
 %.o: %.c
-	gcc -c $< -o $@ -I .
+	gcc -c -Wall -Wextra -Werror $< -o $@ -I .
 
 clean:
 	rm -rf *.o

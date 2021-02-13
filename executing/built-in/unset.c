@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 14:33:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/12 17:16:49 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/13 14:46:15 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char	**ft_unset(t_cmd *cmd, char **env)
 	char	**tmp;
 	t_list	*tmp_lst;
 
+	g_error_value = 0;
 	tmp_lst = cmd->cmds;
 	cmd->cmds = cmd->cmds->next;
 	while (cmd->cmds != NULL)

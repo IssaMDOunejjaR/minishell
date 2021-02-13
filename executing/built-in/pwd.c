@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 16:53:34 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/11 11:09:51 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/13 14:46:02 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	print_pwd(void)
 {
 	char *cwd;
 
+	g_error_value = 0;
 	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
 		print_error("pwd", cwd, NULL);

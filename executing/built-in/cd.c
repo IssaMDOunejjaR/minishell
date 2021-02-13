@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 17:17:00 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/12 17:15:59 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/13 14:45:17 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char			**change_directory(t_cmd *cmd, char **env)
 	char	*oldpwd;
 	t_list	*tmp_lst;
 
+	g_error_value = 0;
 	if (cmd->type == PIPE || g_prev_type == PIPE)
 		return (g_env);
 	tmp_lst = cmd->cmds;

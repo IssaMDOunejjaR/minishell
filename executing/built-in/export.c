@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 09:55:03 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/12 17:16:04 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/13 14:45:55 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ char			**ft_export(t_cmd *cmd, char **env)
 {
 	t_list	*tmp;
 
+	g_error_value = 0;
 	tmp = cmd->cmds;
 	cmd->cmds = cmd->cmds->next;
 	if (g_prev_type != PIPE)
