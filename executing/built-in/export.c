@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 09:55:03 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/12 17:16:04 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/13 11:24:03 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static	char	*add_quotes(char *str)
 	return (new);
 }
 
-static	char	**convert_env(char **env)
+static	char	**convert_env(void)
 {
 	int		i;
 	char	**new;
@@ -63,12 +63,12 @@ static	char	**convert_env(char **env)
 	return (new);
 }
 
-void			print_export(char **env)
+void			print_export(void)
 {
 	int		i;
 	char	**new_env;
 
-	new_env = convert_env(g_env);
+	new_env = convert_env();
 	i = 0;
 	while (new_env[i] != NULL)
 	{
@@ -78,23 +78,38 @@ void			print_export(char **env)
 	free_table(new_env);
 }
 
-char			**ft_export(t_cmd *cmd, char **env)
+static	void	export_var(t_cmd *cmd)
+{
+	if (find_env_var(cmd->cmds->content) == 1)
+		g_env = change_env_var(cmd->cmds->content);
+	else
+		g_env = tab_join(g_env, cmd->cmds->content);
+}
+
+void			ft_export(t_cmd *cmd)
 {
 	t_list	*tmp;
 
+	g_error_value = 0;
 	tmp = cmd->cmds;
-	cmd->cmds = cmd->cmds->next;
-	if (g_prev_type != PIPE)
+	if (ft_lstsize(cmd->cmds) == 1)
+		print_export();
+	else
 	{
+		cmd->cmds = cmd->cmds->next;
 		while (cmd->cmds != NULL)
 		{
-			if (find_env_var( cmd->cmds->content) == 1)
-				g_env = change_env_var(cmd->cmds->content, g_env);
-			else
-				g_env = tab_join(g_env, cmd->cmds->content);
+			if (export_check_special_carac(cmd->cmds->content) == 1)
+			{
+				print_error("export", cmd->cmds->content,
+				"not a valid identifier");
+				cmd->cmds = cmd->cmds->next;
+				continue ;
+			}
+			if (g_prev_type != PIPE && cmd->type != PIPE)
+				export_var(cmd);
 			cmd->cmds = cmd->cmds->next;
 		}
 	}
 	cmd->cmds = tmp;
-	return (g_env);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+         #
+#    By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/09 14:57:18 by iounejja          #+#    #+#              #
-#    Updated: 2021/02/12 15:40:10 by ychennaf         ###   ########.fr        #
+#    Updated: 2021/02/13 11:02:06 by iounejja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS = utils/ft_strcmp.c \
 		executing/files_handling.c \
 		executing/env_var_utils.c \
 		executing/execute_commands.c \
+		executing/more_utils.c \
 		executing/built-in/pwd.c \
 		executing/built-in/cd.c \
 		executing/built-in/env.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 18:17:54 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/12 17:19:52 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/13 11:17:04 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		check_directories(t_cmd *cmd, char **env_path, int i)
 	{
 		if (ft_strcmp(read_dir->d_name, cmd->cmds->content) == 0)
 		{
-			execute_if_exist(cmd,  env_path, i);
+			execute_if_exist(cmd, env_path, i);
 			closedir(rep);
 			return (1);
 		}
@@ -67,12 +67,12 @@ void	command_is_valid(t_cmd *cmd, char **env)
 	char			*tmp;
 
 	i = 0;
-	tmp = get_env_var( "PATH");
+	tmp = get_env_var("PATH");
 	env_path = ft_split(tmp, ':');
 	free(tmp);
 	while (env_path[i] != NULL)
 	{
-		if (check_directories(cmd,  env_path, i) == 1)
+		if (check_directories(cmd, env_path, i) == 1)
 			return ;
 		i++;
 	}
@@ -99,7 +99,7 @@ void	check_if_file_executable(t_cmd *cmd, char **env)
 	close(fd);
 }
 
-char	**get_commands(t_cmd *cmd, char *line)
+void	get_commands(t_cmd *cmd, char *line)
 {
 	char	**tab;
 
@@ -108,8 +108,8 @@ char	**get_commands(t_cmd *cmd, char *line)
 	else
 	{
 		tab = fill_tab2(line);
-		g_env = execute_commands(cmd,  tab);
+		execute_commands(cmd, tab);
 		free_table(tab);
+		g_check = 0;
 	}
-	return (g_env);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 15:12:26 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/12 17:14:56 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/13 11:29:34 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	print_prompt(void)
 void	signal_handler(int signal)
 {
 	ft_putstr_fd("\b\b  \b\b", 1);
-	if (signal == SIGINT)
+	if (signal == SIGINT && g_check == 0)
 	{
 		ft_putchar_fd('\n', 1);
 		free(g_cwd);
@@ -72,18 +72,16 @@ void	handle_ctrl_d(char *line, char **env)
 	exit(g_error_value);
 }
 
-int     main()
+int		main(void)
 {
 	extern char	**environ;
-	char		**tab2;
 	char		*line;
 	t_cmd		cmd;
-	char		**env;
 
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
 	g_env = copy_table_2d(environ);
-	g_env = init_global(g_env);
+	g_env = init_global();
 	while (1)
 	{
 		print_prompt();
@@ -91,9 +89,9 @@ int     main()
 		if (!line)
 			handle_ctrl_d(line, g_env);
 		if (ft_strcmp(line, "") != 0)
-			g_env = get_commands(&cmd,  line);
+			get_commands(&cmd, line);
 		free(g_cwd);
 		free(line);
 	}
-    return (0);
+	return (0);
 }

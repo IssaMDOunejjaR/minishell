@@ -1,7 +1,0 @@
-export a='   test   '
-export b='         p'
-echo $a$b
-echo $a $b
-1 - echo > test -n gdfg gdfg ls
-2 - echo $"hello"
-3 - $?

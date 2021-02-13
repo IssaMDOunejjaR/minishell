@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:42:06 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/12 17:12:47 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/13 11:19:28 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		g_t;
 int		g_i;
 int		g_prev_fd_read;
 int		g_prev_type;
+int		g_check;
 
 int		test;
 
@@ -107,16 +108,14 @@ void	handle2(char *tmp, char *ret, int *j);
 int		fill_qd(char **tmp, char *line, int i);
 
 // Executing Section
-char	**get_commands(t_cmd *cmd, char *line);
-char	**execute_commands(t_cmd *cmd, char **tab);
-char	**check_command(t_cmd *cmd, char **env);
+void	get_commands(t_cmd *cmd, char *line);
+void	execute_commands(t_cmd *cmd, char **tab);
+void	check_command(t_cmd *cmd);
 void	check_if_file_executable(t_cmd *cmd, char **env);
 void	command_is_valid(t_cmd *cmd, char **env);
 void	command_exe(t_cmd *cmd, char **env);
 int		check_built_in(t_cmd *cmd);
-char	**exec_built_in(t_cmd *cmd, char **env);
-char	**execute_commands(t_cmd *cmd, char **tab);
-
+void	exec_built_in(t_cmd *cmd, char **env);
 
 void	free_table(char **tab);
 int		table_len_2d(char **tab);
@@ -126,25 +125,27 @@ char	**tab_join(char **tab, char *line);
 t_file	*lst_file_new(char *file, t_type type);
 void	lst_file_add_back(t_file **alst, t_file *new);
 void	free_commands(t_cmd *cmd);
-t_list	*check_more_args(t_cmd *cmd);
 int		is_all_num(char *str);
+char	**get_args(t_cmd *cmd);
 
-char	**init_global(char **env);
+char	**init_global(void);
 int		find_env_var(char *env_var);
 char	*get_current_working_directory();
-char	**change_directory(t_cmd *cmd, char **env);
+void	change_directory(t_cmd *cmd);
 void	print_pwd();
 char	*get_env_var(char *name);
-void	exit_shell(t_cmd *cmd, char **env);
+void	exit_shell(t_cmd *cmd);
 void	ft_echo(t_cmd *cmd);
-char    **ft_export(t_cmd *cmd, char **env);
+void	ft_export(t_cmd *cmd);
 int		check_files(t_cmd *cmd);
-char	**ft_unset(t_cmd *cmd, char **env);
-void    print_export(char **env);
+void	ft_unset(t_cmd *cmd);
+void    print_export();
 char	**delete_env_var(char *env_var);
-char	**change_env_var(char *env_var, char **env);
-int		check_special_carac(char *str);
+char	**change_env_var(char *env_var);
+int		export_check_special_carac(char *str);
+int		unset_check_special_carac(char *str);
 void	print_error(char *command, char *content, char *error);
-void	print_env(char **env);
+void	print_env(void);
+void	get_latest_cmd(t_cmd *cmd);
 
 #endif

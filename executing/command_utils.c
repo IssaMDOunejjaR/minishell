@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 10:47:54 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/11 11:16:35 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/13 10:58:51 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,31 @@ void	free_table(char **tab)
 	free(tab);
 }
 
-int		check_special_carac(char *str)
+int		export_check_special_carac(char *str)
+{
+	int		i;
+	int		j;
+	char	*sc;
+	char	**tmp;
+
+	tmp = ft_split(str, '=');
+	sc = "!#%&()*+,-./:?@[]^{}~";
+	i = 0;
+	while (tmp[0][i] != '\0')
+	{
+		j = 0;
+		while (sc[j] != '\0')
+		{
+			if (tmp[0][i] == sc[j])
+				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+int		unset_check_special_carac(char *str)
 {
 	int		i;
 	int		j;
@@ -75,23 +99,4 @@ int		is_all_num(char *str)
 		i++;
 	}
 	return (0);
-}
-
-void	print_error(char *command, char *content, char *error)
-{
-	ft_putstr_fd("minishell: ", 2);
-	if (command != NULL)
-	{
-		ft_putstr_fd(command, 2);
-		ft_putstr_fd(": ", 2);
-	}
-	if (content != NULL)
-	{
-		ft_putstr_fd(content, 2);
-		ft_putstr_fd(": ", 2);
-	}
-	if (error != NULL)
-		ft_putendl_fd(error, 2);
-	else
-		ft_putendl_fd(strerror(errno), 2);
 }

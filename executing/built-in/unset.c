@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 14:33:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/12 17:16:49 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/13 11:21:11 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,30 @@ char	**delete_env_var(char *env_var)
 	return (new_env);
 }
 
-char	**ft_unset(t_cmd *cmd, char **env)
+void	ft_unset(t_cmd *cmd)
 {
 	char	**tmp;
 	t_list	*tmp_lst;
 
+	g_error_value = 0;
 	tmp_lst = cmd->cmds;
 	cmd->cmds = cmd->cmds->next;
 	while (cmd->cmds != NULL)
 	{
-		if (check_special_carac(cmd->cmds->content) == 1)
+		if (unset_check_special_carac(cmd->cmds->content) == 1)
 		{
 			print_error("unset", cmd->cmds->content, "not a valid identifier");
-			cmd->cmds = tmp_lst;
-			return (g_env);
+			cmd->cmds = cmd->cmds->next;
+			continue ;
 		}
-		if (find_env_var( cmd->cmds->content) == 1 &&
+		if (find_env_var(cmd->cmds->content) == 1 &&
 		cmd->type != PIPE && g_prev_type != PIPE)
 		{
 			tmp = g_env;
-			g_env = delete_env_var( cmd->cmds->content);
+			g_env = delete_env_var(cmd->cmds->content);
 			free_table(tmp);
 		}
 		cmd->cmds = cmd->cmds->next;
 	}
 	cmd->cmds = tmp_lst;
-	return (g_env);
 }

@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 11:18:21 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/11 11:16:48 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/12 18:00:31 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ int					check_files(t_cmd *cmd)
 	int		fd;
 
 	if (create_and_check(cmd) == 1)
+		return (1);
+	if (cmd->cmds == NULL)
 		return (1);
 	read = handle_read(cmd);
 	if (read != NULL)
