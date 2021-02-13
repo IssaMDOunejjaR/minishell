@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 10:58:33 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 11:19:44 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/13 16:01:02 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,33 @@ void	get_latest_cmd(t_cmd *cmd)
 		g_latest_cmd = ft_strdup("");
 	}
 	cmd->cmds = tmp;
+}
+
+char	**split_export(char *str, char **tmp)
+{
+	int		i;
+	int		j;
+	int		check;
+
+	i = 0;
+	check = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '=')
+		{
+			check = 1;
+			break ;
+		}
+		i++;
+	}
+	j = 0;
+	if (check == 1)
+		tmp = malloc(sizeof(char*) * 3);
+	else
+		tmp = malloc(sizeof(char*) * 2);
+	tmp[j++] = ft_substr(str, 0, i);
+	if (check == 1)
+		tmp[j++] = ft_substr(str, i + 1, ft_strlen(str));
+	tmp[j] = NULL;
+	return (tmp);
 }

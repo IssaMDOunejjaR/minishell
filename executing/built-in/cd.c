@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 17:17:00 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 11:20:56 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/13 14:26:01 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void			change_directory(t_cmd *cmd)
 	if (ft_lstsize(cmd->cmds) > 1)
 		tmp = get_tmp(cmd);
 	else
-		tmp = ft_strdup("/");
+		tmp = get_env_var("HOME");
 	if (chdir(tmp) == -1)
 	{
 		g_error_value = 1;

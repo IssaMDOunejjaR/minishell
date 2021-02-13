@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 18:17:54 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 11:17:04 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/13 14:30:43 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	get_commands(t_cmd *cmd, char *line)
 	char	**tab;
 
 	if (check_line(line) == 1)
-		ft_putendl_fd("syntax error", 1);
+		print_error(NULL, NULL, "syntax error");
 	else
 	{
 		tab = fill_tab2(line);

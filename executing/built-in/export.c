@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 09:55:03 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 11:24:03 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/13 16:00:53 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static	char	*add_quotes(char *str)
 	char	**tmp;
 	char	*tmp1;
 
-	tmp = ft_split(str, '=');
+	tmp = split_export(str, tmp);
 	if (table_len_2d(tmp) != 2)
 	{
 		free_table(tmp);
