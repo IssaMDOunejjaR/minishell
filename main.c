@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 15:12:26 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 11:29:34 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/13 16:55:25 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	signal_handler(int signal)
 	}
 }
 
-void	handle_ctrl_d(char *line, char **env)
+void	handle_ctrl_d(char *line)
 {
 	ft_putendl_fd("exit", 1);
 	free(line);
@@ -87,7 +87,7 @@ int		main(void)
 		print_prompt();
 		line = ft_read_line();
 		if (!line)
-			handle_ctrl_d(line, g_env);
+			handle_ctrl_d(line);
 		if (ft_strcmp(line, "") != 0)
 			get_commands(&cmd, line);
 		free(g_cwd);

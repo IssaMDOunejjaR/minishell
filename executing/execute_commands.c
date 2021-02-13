@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 17:57:31 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 11:19:13 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/13 16:53:11 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void			execute_commands(t_cmd *cmd, char **tab)
 	{
 		g_check = 1;
 		if (check_built_in(cmd))
-			exec_built_in(cmd, g_env);
+			exec_built_in(cmd);
 		else
 			fd = execute_proccess(cmd, fd, pipe_fd);
 		if (cmd->cmds != NULL)

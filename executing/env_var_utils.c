@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 17:43:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 11:17:31 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/13 16:52:59 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,28 +67,4 @@ char				**change_env_var(char *env_var)
 	g_env = tab_join(g_env, env_var);
 	free_table(tmp);
 	return (g_env);
-}
-
-static	t_list		*add_more_args(t_cmd *cmd, char **tmp)
-{
-	int		i;
-	t_list	*new_lst;
-	t_list	*t;
-
-	i = 0;
-	new_lst = NULL;
-	while (tmp[i] != NULL)
-	{
-		ft_lstadd_back(&new_lst, ft_lstnew(ft_strdup(tmp[i])));
-		i++;
-	}
-	t = cmd->cmds;
-	cmd->cmds = cmd->cmds->next;
-	while (cmd->cmds != NULL)
-	{
-		ft_lstadd_back(&new_lst, ft_lstnew(ft_strdup(cmd->cmds->content)));
-		cmd->cmds = cmd->cmds->next;
-	}
-	cmd->cmds = t;
-	return (new_lst);
 }

@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 15:21:55 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 11:14:47 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/13 16:52:37 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	check_command(t_cmd *cmd)
 	if (check_more(cmd) == 1)
 		;
 	else if (tmp[0] == '.' || tmp[0] == '/')
-		check_if_file_executable(cmd, g_env);
+		check_if_file_executable(cmd);
 	else if (ft_strcmp(tmp, "echo") == 0)
 		ft_echo(cmd);
 	else if (ft_strcmp(tmp, "pwd") == 0)
@@ -52,7 +52,7 @@ void	check_command(t_cmd *cmd)
 	else if (ft_strcmp(cmd->cmds->content, "exit") == 0)
 		exit_shell(cmd);
 	else
-		command_is_valid(cmd, g_env);
+		command_is_valid(cmd);
 }
 
 int		check_built_in(t_cmd *cmd)
@@ -71,7 +71,7 @@ int		check_built_in(t_cmd *cmd)
 	return (0);
 }
 
-void	exec_built_in(t_cmd *cmd, char **env)
+void	exec_built_in(t_cmd *cmd)
 {
 	if (cmd->files != NULL)
 		if (check_files(cmd) == 1)
@@ -88,7 +88,7 @@ void	exec_built_in(t_cmd *cmd, char **env)
 		exit_shell(cmd);
 }
 
-void	command_exe(t_cmd *cmd, char **env)
+void	command_exe(t_cmd *cmd)
 {
 	char	*command;
 	char	**args;

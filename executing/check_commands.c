@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 18:17:54 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 14:30:43 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/13 16:51:47 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		check_directories(t_cmd *cmd, char **env_path, int i)
 	return (0);
 }
 
-void	command_is_valid(t_cmd *cmd, char **env)
+void	command_is_valid(t_cmd *cmd)
 {
 	int				i;
 	char			**env_path;
@@ -81,7 +81,7 @@ void	command_is_valid(t_cmd *cmd, char **env)
 	free_table(env_path);
 }
 
-void	check_if_file_executable(t_cmd *cmd, char **env)
+void	check_if_file_executable(t_cmd *cmd)
 {
 	struct stat sb;
 	int			fd;

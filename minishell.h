@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:42:06 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 12:52:32 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/13 16:59:45 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,11 @@ int					fill_qd(char **tmp, char *line, int i);
 void				get_commands(t_cmd *cmd, char *line);
 void				execute_commands(t_cmd *cmd, char **tab);
 void				check_command(t_cmd *cmd);
-void				check_if_file_executable(t_cmd *cmd, char **env);
-void				command_is_valid(t_cmd *cmd, char **env);
-void				command_exe(t_cmd *cmd, char **env);
+void				check_if_file_executable(t_cmd *cmd);
+void				command_is_valid(t_cmd *cmd);
+void				command_exe(t_cmd *cmd);
 int					check_built_in(t_cmd *cmd);
-void				exec_built_in(t_cmd *cmd, char **env);
+void				exec_built_in(t_cmd *cmd);
 
 void				free_table(char **tab);
 int					table_len_2d(char **tab);
@@ -141,5 +141,7 @@ int					unset_check_special_carac(char *str);
 void				print_error(char *command, char *content, char *error);
 void				print_env(void);
 void				get_latest_cmd(t_cmd *cmd);
+char				**split_export(char *str, char **tmp);
+char				**convert_env(void);
 
 #endif

@@ -6,24 +6,17 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 09:55:03 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 16:00:53 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/13 17:01:17 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	char	*add_quotes(char *str)
+static	char	*join_export(char **tmp)
 {
 	char	*new;
-	char	**tmp;
 	char	*tmp1;
 
-	tmp = split_export(str, tmp);
-	if (table_len_2d(tmp) != 2)
-	{
-		free_table(tmp);
-		return (ft_strjoin("declare -x ", str));
-	}
 	new = ft_strjoin("\"", tmp[1]);
 	tmp1 = new;
 	new = ft_strjoin(new, "\"");
@@ -37,11 +30,27 @@ static	char	*add_quotes(char *str)
 	tmp1 = new;
 	new = ft_strjoin("declare -x ", new);
 	free(tmp1);
+	return (new);
+}
+
+static	char	*add_quotes(char *str)
+{
+	char	*new;
+	char	**tmp;
+
+	tmp = NULL;
+	tmp = split_export(str, tmp);
+	if (table_len_2d(tmp) != 2)
+	{
+		free_table(tmp);
+		return (ft_strjoin("declare -x ", str));
+	}
+	new = join_export(tmp);
 	free_table(tmp);
 	return (new);
 }
 
-static	char	**convert_env(void)
+char			**convert_env(void)
 {
 	int		i;
 	char	**new;
@@ -61,21 +70,6 @@ static	char	**convert_env(void)
 	new[i] = NULL;
 	free_table(tmp);
 	return (new);
-}
-
-void			print_export(void)
-{
-	int		i;
-	char	**new_env;
-
-	new_env = convert_env();
-	i = 0;
-	while (new_env[i] != NULL)
-	{
-		ft_putendl_fd(new_env[i], 1);
-		i++;
-	}
-	free_table(new_env);
 }
 
 static	void	export_var(t_cmd *cmd)

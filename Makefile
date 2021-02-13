@@ -6,7 +6,7 @@
 #    By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/09 14:57:18 by iounejja          #+#    #+#              #
-#    Updated: 2021/02/13 11:02:06 by iounejja         ###   ########.fr        #
+#    Updated: 2021/02/13 17:00:21 by iounejja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,14 +44,14 @@ SRCS = utils/ft_strcmp.c \
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
-	gcc main.c $(NAME) -o $(EXEC)
+	gcc -Wall -Wextra -Werror main.c $(NAME) -o $(EXEC)
 
 $(NAME): $(OBJS)
 		cd utils/libft && make bonus
 		ar rcs $(NAME) $(OBJS) utils/libft/*.o
 
 %.o: %.c
-	gcc -c $< -o $@ -I .
+	gcc -Wall -Wextra -Werror -c $< -o $@ -I .
 
 clean:
 	rm -rf *.o
