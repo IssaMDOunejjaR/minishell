@@ -6,13 +6,13 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 15:48:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 14:45:42 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/13 17:06:06 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	void	free_and_exit(t_cmd *cmd, char **env)
+static	void	free_and_exit(t_cmd *cmd)
 {
 	free(g_cwd);
 	free(g_latest_cmd);
@@ -21,7 +21,7 @@ static	void	free_and_exit(t_cmd *cmd, char **env)
 	exit(g_error_value);
 }
 
-void			exit_shell(t_cmd *cmd, char **env)
+void			exit_shell(t_cmd *cmd)
 {
 	t_list *tmp;
 
@@ -43,5 +43,5 @@ void			exit_shell(t_cmd *cmd, char **env)
 	}
 	cmd->cmds = tmp;
 	if (cmd->type != PIPE && g_prev_type != PIPE)
-		free_and_exit(cmd, g_env);
+		free_and_exit(cmd);
 }

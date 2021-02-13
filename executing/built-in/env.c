@@ -6,21 +6,41 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 17:10:03 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 14:45:32 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/13 17:06:02 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_env(char **env)
+void	print_export(void)
 {
-	int i;
+	int		i;
+	char	**new_env;
 
+	new_env = convert_env();
+	i = 0;
+	while (new_env[i] != NULL)
+	{
+		ft_putendl_fd(new_env[i], 1);
+		i++;
+	}
+	free_table(new_env);
+}
+
+void	print_env(void)
+{
+	int		i;
+	char	**tmp;
+
+	g_error_value = 0;
 	i = 0;
 	g_error_value = 0;
 	while (g_env[i] != NULL)
 	{
-		ft_putendl_fd(g_env[i], 1);
+		tmp = ft_split(g_env[i], '=');
+		if (table_len_2d(tmp) > 1)
+			ft_putendl_fd(g_env[i], 1);
+		free_table(tmp);
 		i++;
 	}
 }

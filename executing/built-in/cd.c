@@ -6,18 +6,18 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 17:17:00 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 14:45:17 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/13 17:05:38 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	char	**set_oldpwd(char **env)
+static	char	**set_oldpwd(void)
 {
 	char	*env_var;
 
 	env_var = ft_strjoin("OLDPWD=", g_old_pwd);
-	g_env = change_env_var(env_var, g_env);
+	g_env = change_env_var(env_var);
 	free(env_var);
 	return (g_env);
 }
@@ -26,8 +26,8 @@ static	char	**get_oldpwd(char *oldpwd)
 {
 	free(g_old_pwd);
 	g_old_pwd = ft_strdup(oldpwd);
-	if (find_env_var( "OLDPWD") == 1)
-		g_env = set_oldpwd(g_env);
+	if (find_env_var("OLDPWD") == 1)
+		g_env = set_oldpwd();
 	return (g_env);
 }
 
@@ -37,7 +37,7 @@ static	char	*get_tmp(t_cmd *cmd)
 	return (ft_strdup(cmd->cmds->content));
 }
 
-char			**change_directory(t_cmd *cmd, char **env)
+void			change_directory(t_cmd *cmd)
 {
 	char	*tmp;
 	char	*oldpwd;
@@ -45,22 +45,21 @@ char			**change_directory(t_cmd *cmd, char **env)
 
 	g_error_value = 0;
 	if (cmd->type == PIPE || g_prev_type == PIPE)
-		return (g_env);
+		;
 	tmp_lst = cmd->cmds;
 	oldpwd = getcwd(NULL, 0);
 	if (ft_lstsize(cmd->cmds) > 1)
 		tmp = get_tmp(cmd);
 	else
-		tmp = ft_strdup("/");
+		tmp = get_env_var("HOME");
 	if (chdir(tmp) == -1)
 	{
 		g_error_value = 1;
 		print_error("cd", tmp, NULL);
 	}
 	else
-		g_env = get_oldpwd( oldpwd);
+		g_env = get_oldpwd(oldpwd);
 	free(oldpwd);
 	free(tmp);
 	cmd->cmds = tmp_lst;
-	return (g_env);
 }

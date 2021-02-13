@@ -6,7 +6,7 @@
 #    By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/09 14:57:18 by iounejja          #+#    #+#              #
-#    Updated: 2021/02/13 16:46:03 by ychennaf         ###   ########.fr        #
+#    Updated: 2021/02/13 17:15:21 by ychennaf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,6 @@ SRCS = utils/ft_strcmp.c \
 		parsing/parse.c \
 		parsing/get_env.c \
 		parsing/handle_quotes.c \
-		parsing/free_cmd.c \
 		parsing/check_line.c \
 		parsing/handle_line.c \
 		parsing/handle_cmd.c \
@@ -33,6 +32,7 @@ SRCS = utils/ft_strcmp.c \
 		executing/files_handling.c \
 		executing/env_var_utils.c \
 		executing/execute_commands.c \
+		executing/more_utils.c \
 		executing/built-in/pwd.c \
 		executing/built-in/cd.c \
 		executing/built-in/env.c \
