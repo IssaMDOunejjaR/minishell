@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 18:19:05 by ychennaf          #+#    #+#             */
-/*   Updated: 2021/02/13 15:27:26 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/14 11:49:35 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		value_doll_length(char *line, int i)
 	int	j;
 
 	j = 0;
-	if (line[i] == '?')
+	if (line[i] && line[i] == '?')
 		return (1);
 	while (line[i] && !end_doll(line[i]))
 	{

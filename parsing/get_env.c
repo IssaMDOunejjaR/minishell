@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 19:08:58 by ychennaf          #+#    #+#             */
-/*   Updated: 2021/02/13 15:21:06 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/14 11:54:19 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,7 @@ int		get_env_length(char *line, int i)
 		free(val_env);
 	}
 	free(tmp);
+	if (j == 0)
+		return (1);
 	return (j);
 }
