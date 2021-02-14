@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 17:57:31 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/14 10:57:25 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/14 11:34:05 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static	void	child_process(t_cmd *cmd, int fd, int pipe_fd[2])
 {
 	if (dup2(fd, 0) == -1)
 		ft_putendl_fd(strerror(errno), 1);
-	if (cmd->type == PIPE && cmd->files == NULL)
+	if (cmd->type == PIPE)
 	{
 		if (dup2(pipe_fd[1], 1) == -1)
 			ft_putendl_fd(strerror(errno), 1);
