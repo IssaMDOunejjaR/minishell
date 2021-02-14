@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 17:10:03 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 16:57:16 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/13 17:06:02 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	print_env(void)
 
 	g_error_value = 0;
 	i = 0;
+	g_error_value = 0;
 	while (g_env[i] != NULL)
 	{
 		tmp = ft_split(g_env[i], '=');

@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 15:12:26 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 16:55:25 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/14 10:33:07 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,20 @@
 char	*ft_read_line(void)
 {
 	int		ret;
-	char	buffer[BUFFER_SIZE];
+	char	buffer[BUFFER_SIZE + 1];
 	char	*line;
 	char	*tmp;
 
-	line = ft_strdup("");
-	while ((ret = read(0, buffer, BUFFER_SIZE)) > 0)
+	line = NULL;
+	while ((ret = read(0, buffer, BUFFER_SIZE)) > 0 || (ret == 0 && line))
 	{
 		buffer[ret] = '\0';
+		if (!line)
+			line = ft_calloc(1, sizeof(char));
 		tmp = line;
 		line = ft_strjoin(line, buffer);
 		free(tmp);
-		if (ft_strchr(buffer, '\n'))
+		if (ft_strchr(line, '\n'))
 			break ;
 	}
 	if (!ret)

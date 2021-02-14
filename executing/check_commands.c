@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 18:17:54 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 16:51:47 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/13 17:06:42 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	execute_if_exist(t_cmd *cmd, char **env_path, int i)
 	cmd->cmds->content = ft_strdup(command);
 	free(tmp);
 	if (stat(cmd->cmds->content, &sb) == 0 && sb.st_mode & S_IXUSR)
-		command_exe(cmd, g_env);
+		command_exe(cmd);
 	else
 		print_error(cmd->cmds->content, NULL, "Permission denied");
 	free_table(env_path);
@@ -93,7 +93,7 @@ void	check_if_file_executable(t_cmd *cmd)
 		return ;
 	}
 	if (stat(cmd->cmds->content, &sb) == 0 && sb.st_mode & S_IXUSR)
-		command_exe(cmd, g_env);
+		command_exe(cmd);
 	else
 		print_error(cmd->cmds->content, NULL, "Permission denied");
 	close(fd);

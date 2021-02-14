@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 11:18:21 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/12 18:00:31 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/14 11:05:11 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,10 @@ int					create_and_check(t_cmd *cmd)
 	fd = 0;
 	while (cmd->files != NULL)
 	{
-		if (cmd->files->type == WRITE)
-			fd = open(cmd->files->file, O_CREAT, 0666);
-		else if (cmd->files->type == READ)
+		if ((fd = get_write_append_read(cmd)) < 0)
 		{
-			fd = open(cmd->files->file, O_RDONLY, 0666);
-			if (fd < 0)
-			{
-				print_error(cmd->cmds->content, cmd->files->file, NULL);
-				cmd->files = tmp;
-				return (1);
-			}
+			cmd->files = tmp;
+			return (1);
 		}
 		if (fd != 0)
 			close(fd);

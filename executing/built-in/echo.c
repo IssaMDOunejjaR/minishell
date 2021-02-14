@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 10:38:44 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 10:56:52 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/13 17:05:54 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	ft_echo(t_cmd *cmd)
 
 	g_error_value = 0;
 	check = 0;
+	g_error_value = 0;
 	cmd->cmds = cmd->cmds->next;
 	while (cmd->cmds != NULL)
 	{

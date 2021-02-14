@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:37:48 by ychennaf          #+#    #+#             */
-/*   Updated: 2021/02/12 17:17:56 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/13 14:59:15 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ int		fill_qd(char **tmp, char *line, int i)
 	if (line[i] == '"' || line[i] == '\'')
 	{
 		i++;
-		*tmp = fill_q(line,  &i, line[i - 1]);
+		*tmp = fill_q(line, &i, line[i - 1]);
 	}
 	else if (line[i] == '$')
 	{
 		i++;
-		*tmp = fill_d(line,  &i);		
+		*tmp = fill_d(line, &i);
 	}
 	return (i);
 }

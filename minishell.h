@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:42:06 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 16:59:45 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/14 11:03:47 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int					g_prev_fd_read;
 int					g_prev_type;
 int					g_check;
 
-typedef enum		s_type
+typedef enum		e_type
 {
 	WRITE,
 	READ,
@@ -56,11 +56,13 @@ typedef struct		s_file
 
 typedef struct		s_cmd
 {
-	t_list			*cmds;
-	t_file			*files;
-	t_type			type;
+	t_list	*cmds;
+	t_file	*files;
+	t_type	type;
 }					t_cmd;
 
+t_file				*lst_file_new(char *file, t_type type);
+void				lst_file_add_back(t_file **alst, t_file *new);
 int					get_command(t_cmd *cmd, char **tab2);
 char				*get_env(char *line);
 int					get_simple_s(char *line, t_cmd *cmd, char **env);
@@ -75,7 +77,6 @@ char				*value_doll(char *line, int i);
 void				add_lsdoll(char *line, t_cmd *cmd);
 void				init_cmd(t_cmd *cmd);
 int					simple_length(int i, char *line);
-void				free_commands(t_cmd *cmd);
 int					check_line(char *line);
 int					is_charm(char c);
 int					check_pipe(char *line, int i);
@@ -84,23 +85,28 @@ int					check_semi(char *line, int i);
 int					skip_spaces(char *line, int i);
 char				**fill_tab2(char *line);
 char				*fill_tab(char *line);
-int					check_end_cmd(t_cmd *cmd, char **tab, char **env);
+int					check_end_cmd(t_cmd *cmd, char **tab);
 int					size_q(char *line, int *i, char type);
-int					size_line(char *line, char **env);
+int					size_line(char *line);
 void				handle_cmd(char *line, t_cmd *cmd);
-char				*handle_file(char *line, char **env);
+char				*handle_file(char *line);
 char				*fill_q(char *line, int *i, char type);
 char				*fill_d(char *line, int *i);
 int					check_backslash(char c);
 char				*fill_d2(char *tmp, int *i);
 void				fill_ret(char *vl_env, char *ret, int *j);
 void				free2(char *s1, char *s2);
-void				fill_q2(char *line, char type, int *i, int *k, char *ret);
+void				fill_q2(char *line, int *i, int *k, char *ret);
+int					size_q_b(char *line, int i, char type);
 int					size_q_b2(char *line, int i, char type, int *l);
 int					size_q2(char *line, int *i, char type);
 int					check_end_cmd2(t_cmd *cmd, char **tab);
 void				handle2(char *tmp, char *ret, int *j);
 int					fill_qd(char **tmp, char *line, int i);
+char				**tab_join_f(char **tab, char *line);
+char				*alloc_q(int *k, int *i, char *ret, char *line);
+int					check_backslash2(char *line, int *i, char type);
+int					lenght_digit(int n);
 
 void				get_commands(t_cmd *cmd, char *line);
 void				execute_commands(t_cmd *cmd, char **tab);
@@ -143,5 +149,6 @@ void				print_env(void);
 void				get_latest_cmd(t_cmd *cmd);
 char				**split_export(char *str, char **tmp);
 char				**convert_env(void);
+int					get_write_append_read(t_cmd *cmd);
 
 #endif

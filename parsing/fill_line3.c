@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_cmd.c                                         :+:      :+:    :+:   */
+/*   fill_line3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/02 17:33:00 by ychennaf          #+#    #+#             */
-/*   Updated: 2021/02/12 15:31:31 by ychennaf         ###   ########.fr       */
+/*   Created: 2021/02/13 11:14:44 by ychennaf          #+#    #+#             */
+/*   Updated: 2021/02/13 11:30:03 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	free_commands(t_cmd *cmd)
+int		check_backslash2(char *line, int *i, char type)
 {
-	while (cmd->cmds != NULL)
+	if (line[*i] == '\\' && check_backslash(line[*i + 1]) == 1 && type == '"')
 	{
-		free(cmd->cmds->content);
-		free(cmd->cmds);
-		cmd->cmds = cmd->cmds->next;
+		(*i)++;
 	}
-	while (cmd->files != NULL)
-	{
-		free(cmd->files->file);
-		free(cmd->files);
-		cmd->files = cmd->files->next;
-	}
+	if (line[*i] && (check_backslash(line[*i]) == 0
+		|| line[*i - 1] != '\\' || type == '"'))
+		return (1);
+	return (0);
 }

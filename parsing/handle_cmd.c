@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 12:00:23 by ychennaf          #+#    #+#             */
-/*   Updated: 2021/02/12 17:17:53 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/13 16:48:33 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		size_q(char *line, int *i, char type)
 	{
 		if (line[*i] == '$' && type == '"' && line[*i - 1] != '\\')
 		{
-			l += get_env_length( line, ++(*i));
+			l += get_env_length(line, ++(*i));
 			*i += value_doll_length(line, *i);
 		}
 		else
@@ -38,7 +38,7 @@ int		size_q(char *line, int *i, char type)
 	return (l);
 }
 
-int		size_line(char *line, char **env)
+int		size_line(char *line)
 {
 	int		i;
 	int		l;
@@ -50,13 +50,13 @@ int		size_line(char *line, char **env)
 	{
 		if (line[i] == '$')
 		{
-			l += get_env_length( line, ++i);
+			l += get_env_length(line, ++i);
 			i += value_doll_length(line, i);
 		}
 		else if (line[i] == '\'' || line[i] == '"')
 		{
 			type = line[i++];
-			l += size_q(line,  &i, type);
+			l += size_q(line, &i, type);
 		}
 		else if (line[i])
 		{
@@ -67,7 +67,7 @@ int		size_line(char *line, char **env)
 	return (l);
 }
 
-int		check_end_cmd(t_cmd *cmd, char **tab, char **env)
+int		check_end_cmd(t_cmd *cmd, char **tab)
 {
 	if (check_end_cmd2(cmd, tab) == 1)
 		return (1);
@@ -75,19 +75,19 @@ int		check_end_cmd(t_cmd *cmd, char **tab, char **env)
 	{
 		g_t++;
 		lst_file_add_back(&cmd->files,
-		lst_file_new(handle_file(tab[g_t++], g_env), WRITE));
+		lst_file_new(handle_file(tab[g_t++]), WRITE));
 	}
 	else if (ft_strcmp(tab[g_t], "<") == 0)
 	{
 		g_t++;
 		lst_file_add_back(&cmd->files,
-		lst_file_new(handle_file(tab[g_t++], g_env), READ));
+		lst_file_new(handle_file(tab[g_t++]), READ));
 	}
 	else if (ft_strcmp(tab[g_t], ">>") == 0)
 	{
 		g_t++;
 		lst_file_add_back(&cmd->files,
-		lst_file_new(handle_file(tab[g_t++], g_env), APPEND));
+		lst_file_new(handle_file(tab[g_t++]), APPEND));
 	}
 	return (0);
 }
@@ -101,17 +101,17 @@ void	handle_cmd(char *line, t_cmd *cmd)
 
 	j = 0;
 	i = 0;
-	ret = ft_calloc(size_line(line, g_env) + 1, sizeof(char));
+	ret = ft_calloc(size_line(line) + 1, sizeof(char));
 	while (line[i])
 	{
 		if (line[i] == '"' || line[i] == '\'')
 		{
-			i = fill_qd(&tmp, line,  i);
+			i = fill_qd(&tmp, line, i);
 			handle2(tmp, ret, &j);
 		}
 		else if (line[i] == '$')
 		{
-			i = fill_qd(&tmp, line,  i);
+			i = fill_qd(&tmp, line, i);
 			handle2(tmp, ret, &j);
 		}
 		else if (line[i])
@@ -120,7 +120,7 @@ void	handle_cmd(char *line, t_cmd *cmd)
 	ft_lstadd_back(&cmd->cmds, ft_lstnew(ret));
 }
 
-char	*handle_file(char *line, char **env)
+char	*handle_file(char *line)
 {
 	int		i;
 	int		j;
@@ -129,17 +129,17 @@ char	*handle_file(char *line, char **env)
 
 	j = 0;
 	i = 0;
-	ret = ft_calloc(size_line(line, g_env) + 1, sizeof(char));
+	ret = ft_calloc(size_line(line) + 1, sizeof(char));
 	while (line[i])
 	{
 		if (line[i] == '"' || line[i] == '\'')
 		{
-			i = fill_qd(&tmp, line,  i);
+			i = fill_qd(&tmp, line, i);
 			handle2(tmp, ret, &j);
 		}
 		else if (line[i] == '$')
 		{
-			i = fill_qd(&tmp, line,  i);
+			i = fill_qd(&tmp, line, i);
 			handle2(tmp, ret, &j);
 		}
 		else if (line[i])

@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 17:43:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 16:52:59 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/14 11:05:01 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,27 @@ char				**change_env_var(char *env_var)
 	g_env = tab_join(g_env, env_var);
 	free_table(tmp);
 	return (g_env);
+}
+
+int					get_write_append_read(t_cmd *cmd)
+{
+	int	fd;
+
+	fd = 0;
+	if (cmd->files->type == WRITE)
+		fd = open(cmd->files->file, O_CREAT | O_TRUNC, 0666);
+	else if (cmd->files->type == APPEND)
+		fd = open(cmd->files->file, O_CREAT, 0666);
+	else if (cmd->files->type == READ)
+	{
+		fd = open(cmd->files->file, O_RDONLY, 0666);
+		if (fd < 0)
+		{
+			if (cmd->cmds != NULL)
+				print_error(cmd->cmds->content, cmd->files->file, NULL);
+			else
+				print_error(NULL, cmd->files->file, NULL);
+		}
+	}
+	return (fd);
 }
