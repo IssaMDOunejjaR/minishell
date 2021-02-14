@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 15:21:27 by ychennaf          #+#    #+#             */
-/*   Updated: 2021/02/14 11:23:43 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/14 18:16:34 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,24 +43,21 @@ static	int		check_line2(char *line, int *i)
 {
 	if (line[*i] == '|')
 	{
-		if (check_pipe(line, *i) == 0)
+		if ((*i = check_pipe(line, *i)) == 0)
 			return (0);
-		else
-			*i = check_pipe(line, *i);
+		(*i)--;
 	}
 	else if (line[*i] == '>' || line[*i] == '<')
 	{
-		if (check_app(line, *i) == 0)
+		if ((*i = check_app(line, *i)) == 0)
 			return (0);
-		else
-			*i = check_app(line, *i);
+		(*i)--;
 	}
 	else if (line[*i] == ';')
 	{
-		if (check_semi(line, *i) == 0)
+		if ((*i = check_semi(line, *i)) == 0)
 			return (0);
-		else
-			*i = check_semi(line, *i);
+		(*i)--;
 	}
 	return (1);
 }
