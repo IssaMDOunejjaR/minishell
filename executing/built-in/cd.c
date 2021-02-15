@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 17:17:00 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/14 18:29:41 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/15 12:40:47 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,32 @@ static	char	*get_tmp(t_cmd *cmd)
 	cmd->cmds = cmd->cmds->next;
 	if (ft_strcmp(cmd->cmds->content, "-") == 0)
 	{
-		ft_putendl_fd(g_old_pwd, 1);
-		return (ft_strdup(g_old_pwd));
+		if (ft_strcmp(g_old_pwd, "") == 0)
+		{
+			print_error("cd", NULL, "OLDPWD not set");
+			return (ft_strdup(""));
+		}
+		else
+		{
+			ft_putendl_fd(g_old_pwd, 1);
+			return (ft_strdup(g_old_pwd));
+		}
 	}
 	return (ft_strdup(cmd->cmds->content));
+}
+
+static	int		empty_path(char *tmp, char *oldpwd)
+{
+	if (ft_strcmp(tmp, "") == 0)
+		return (1);
+	if (chdir(tmp) == -1)
+	{
+		g_error_value = 1;
+		print_error("cd", tmp, NULL);
+	}
+	else
+		get_oldpwd(oldpwd);
+	return (0);
 }
 
 void			change_directory(t_cmd *cmd)
@@ -57,13 +79,13 @@ void			change_directory(t_cmd *cmd)
 		tmp = get_tmp(cmd);
 	else
 		tmp = get_env_var("HOME");
-	if (chdir(tmp) == -1)
+	if (empty_path(tmp, oldpwd) == 1)
 	{
-		g_error_value = 1;
-		print_error("cd", tmp, NULL);
+		free(oldpwd);
+		free(tmp);
+		cmd->cmds = tmp_lst;
+		return ;
 	}
-	else
-		get_oldpwd(oldpwd);
 	free(oldpwd);
 	free(tmp);
 	cmd->cmds = tmp_lst;
