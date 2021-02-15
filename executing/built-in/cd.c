@@ -3,37 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 17:17:00 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 17:05:38 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/14 18:29:41 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	char	**set_oldpwd(void)
+static	void	set_oldpwd(void)
 {
 	char	*env_var;
 
 	env_var = ft_strjoin("OLDPWD=", g_old_pwd);
 	g_env = change_env_var(env_var);
 	free(env_var);
-	return (g_env);
 }
 
-static	char	**get_oldpwd(char *oldpwd)
+static	void	get_oldpwd(char *oldpwd)
 {
 	free(g_old_pwd);
 	g_old_pwd = ft_strdup(oldpwd);
 	if (find_env_var("OLDPWD") == 1)
-		g_env = set_oldpwd();
-	return (g_env);
+		set_oldpwd();
 }
 
 static	char	*get_tmp(t_cmd *cmd)
 {
 	cmd->cmds = cmd->cmds->next;
+	if (ft_strcmp(cmd->cmds->content, "-") == 0)
+	{
+		ft_putendl_fd(g_old_pwd, 1);
+		return (ft_strdup(g_old_pwd));
+	}
 	return (ft_strdup(cmd->cmds->content));
 }
 
@@ -48,6 +51,8 @@ void			change_directory(t_cmd *cmd)
 		;
 	tmp_lst = cmd->cmds;
 	oldpwd = getcwd(NULL, 0);
+	if (oldpwd == NULL)
+		oldpwd = ft_strdup(g_old_pwd);
 	if (ft_lstsize(cmd->cmds) > 1)
 		tmp = get_tmp(cmd);
 	else
@@ -58,7 +63,7 @@ void			change_directory(t_cmd *cmd)
 		print_error("cd", tmp, NULL);
 	}
 	else
-		g_env = get_oldpwd(oldpwd);
+		get_oldpwd(oldpwd);
 	free(oldpwd);
 	free(tmp);
 	cmd->cmds = tmp_lst;

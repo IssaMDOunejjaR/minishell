@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 18:17:54 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 17:06:42 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/14 18:21:32 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,18 @@ int		check_directories(t_cmd *cmd, char **env_path, int i)
 	struct dirent	*read_dir;
 
 	rep = opendir(env_path[i]);
-	if (rep == NULL)
+	if (rep != NULL)
 	{
-		ft_putendl_fd(strerror(errno), 1);
-		return (1);
-	}
-	while ((read_dir = readdir(rep)) != NULL)
-	{
-		if (ft_strcmp(read_dir->d_name, cmd->cmds->content) == 0)
+		while ((read_dir = readdir(rep)) != NULL)
 		{
-			execute_if_exist(cmd, env_path, i);
-			closedir(rep);
-			return (1);
+			if (ft_strcmp(read_dir->d_name, cmd->cmds->content) == 0)
+			{
+				execute_if_exist(cmd, env_path, i);
+				closedir(rep);
+				return (1);
+			}
 		}
-	}
-	if (closedir(rep) == -1)
-	{
-		ft_putendl_fd(strerror(errno), 1);
-		return (1);
+		closedir(rep);
 	}
 	return (0);
 }

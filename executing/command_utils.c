@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 10:47:54 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 15:55:49 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/15 12:14:52 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int		export_check_special_carac(char *str)
 		j = 0;
 		while (sc[j] != '\0')
 		{
-			if (tmp[0][i] == sc[j])
+			if (tmp[0][i] == sc[j] || ft_isdigit(tmp[0][0]))
 			{
 				free_table(tmp);
 				return (1);
@@ -77,6 +77,8 @@ int		unset_check_special_carac(char *str)
 
 	sc = "!#%&()*+,-./:=?@[]^{}~";
 	i = 0;
+	if (ft_isdigit(str[i]))
+		return (1);
 	while (str[i] != '\0')
 	{
 		j = 0;

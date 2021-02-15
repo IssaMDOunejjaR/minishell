@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/08 15:12:26 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/14 10:33:07 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/15 12:25:58 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	print_prompt(void)
 
 void	signal_handler(int signal)
 {
-	ft_putstr_fd("\b\b  \b\b", 1);
+	if (g_check == 0)
+		ft_putstr_fd("\b\b  \b\b", 1);
 	if (signal == SIGINT && g_check == 0)
 	{
 		ft_putchar_fd('\n', 1);
@@ -71,6 +72,8 @@ void	handle_ctrl_d(char *line)
 	free(g_cwd);
 	free_table(g_env);
 	free(g_latest_cmd);
+	if (g_old_cwd != NULL)
+		free(g_old_cwd);
 	exit(g_error_value);
 }
 

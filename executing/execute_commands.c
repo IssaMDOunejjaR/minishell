@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 17:57:31 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/14 11:34:05 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/15 12:17:59 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,7 @@ static	int		parent_process(t_cmd *cmd, pid_t id, int pipe_fd[2])
 	if (cmd->type == END)
 	{
 		waitpid(id, &status, 0);
-		if (WIFEXITED(status))
-			g_error_value = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status) && WTERMSIG(status) == 2)
-			g_error_value = 130;
-		else if (WIFSIGNALED(status) && WTERMSIG(status) == 3)
-			g_error_value = 131;
+		signal_process(status);
 		while (waitpid(0, 0, 0) >= 0)
 			;
 	}

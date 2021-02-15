@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 17:43:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/14 11:05:01 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/15 12:18:25 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,20 @@ int					get_write_append_read(t_cmd *cmd)
 		}
 	}
 	return (fd);
+}
+
+void				signal_process(int status)
+{
+	if (WIFEXITED(status))
+		g_error_value = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status) && WTERMSIG(status) == 2)
+	{
+		g_error_value = 130;
+		ft_putchar_fd('\n', 1);
+	}
+	else if (WIFSIGNALED(status) && WTERMSIG(status) == 3)
+	{
+		g_error_value = 131;
+		ft_putendl_fd("Quit: 3", 1);
+	}
 }
