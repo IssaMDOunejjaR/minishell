@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 17:17:00 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/17 10:53:57 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/17 10:57:25 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,6 @@ static	int		empty_path(t_cmd *cmd, char *tmp, char *oldpwd)
 		free(tmp1);
 	}
 	return (0);
-}
-
-static	void	free_cd(char *oldpwd, char *tmp)
-{
-	free(oldpwd);
-	free(tmp);
 }
 
 void			change_directory(t_cmd *cmd)
