@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:42:06 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/17 11:46:15 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/17 12:06:44 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,5 +156,6 @@ void				signal_process(int status);
 void				save_pwd(void);
 void				free_cd(char *oldpwd, char *tmp);
 char				*get_home_dir(char *str);
+int					create_and_check(t_cmd *cmd);
 
 #endif

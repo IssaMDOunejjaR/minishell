@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 15:21:55 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/14 11:32:40 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/17 12:06:32 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		check_built_in(t_cmd *cmd)
 void	exec_built_in(t_cmd *cmd)
 {
 	if (cmd->files != NULL)
-		if (check_files(cmd) == 1)
+		if (create_and_check(cmd) == 1)
 			return ;
 	if (cmd->cmds == NULL)
 		return ;
