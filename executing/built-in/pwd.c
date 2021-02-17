@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 16:53:34 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/17 11:27:28 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/17 11:29:48 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	free_cd(char *oldpwd, char *tmp)
 void	save_pwd(void)
 {
 	char	*tmp;
-	
+
 	tmp = getcwd(NULL, 0);
 	if (tmp != NULL)
 	{
