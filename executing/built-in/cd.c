@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 17:17:00 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/17 10:57:25 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/17 11:59:50 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,12 @@ static	void	get_oldpwd(char *oldpwd)
 
 static	char	*get_tmp(t_cmd *cmd)
 {
+	char *tmp;
+
 	cmd->cmds = cmd->cmds->next;
+	tmp = cmd->cmds->content;
+	if (tmp[0] == '~')
+		return (get_home_dir(tmp));
 	if (ft_strcmp(cmd->cmds->content, "-") == 0)
 	{
 		if (ft_strcmp(g_old_pwd, "") == 0)
