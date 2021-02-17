@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 16:53:34 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/17 10:57:31 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/17 11:27:28 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,21 @@ void	free_cd(char *oldpwd, char *tmp)
 
 void	save_pwd(void)
 {
-	if (getcwd(NULL, 0) != NULL)
+	char	*tmp;
+	
+	tmp = getcwd(NULL, 0);
+	if (tmp != NULL)
 	{
-		if (!g_prev_pwd)
-			free(g_prev_pwd);
-		g_prev_pwd = getcwd(NULL, 0);
+		free(g_prev_pwd);
+		g_prev_pwd = ft_strdup(tmp);
 	}
-	else if (getcwd(NULL, 0) == NULL && g_prev_pwd != NULL)
+	else if (tmp == NULL && g_prev_pwd != NULL)
 	{
-		if (!g_prev_pwd)
-			free(g_prev_pwd);
+		free(tmp);
+		tmp = g_prev_pwd;
 		g_prev_pwd = ft_strdup(g_prev_pwd);
 	}
+	free(tmp);
 }
 
 void	print_pwd(void)
