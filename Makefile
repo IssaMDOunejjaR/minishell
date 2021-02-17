@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+         #
+#    By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/09 14:57:18 by iounejja          #+#    #+#              #
-#    Updated: 2021/02/17 11:55:32 by iounejja         ###   ########.fr        #
+#    Updated: 2021/02/17 14:25:19 by ychennaf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@ clean:
 	cd utils/libft &&  make clean
 
 fclean: clean
-		rm -rf $(NAME)
+		rm -rf $(NAME) $(EXEC)
 		cd utils/libft && make fclean
 
 re: fclean all
