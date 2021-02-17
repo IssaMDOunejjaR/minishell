@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:42:06 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/15 12:17:08 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/17 10:36:55 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char				*g_old_cwd;
 char				*g_old_pwd;
 char				*g_latest_cmd;
 char				**g_env;
+char				*g_prev_pwd;
 int					g_error_value;
 int					g_t;
 int					g_i;
@@ -152,5 +153,6 @@ char				**split_export(char *str, char **tmp);
 char				**convert_env(void);
 int					get_write_append_read(t_cmd *cmd);
 void				signal_process(int status);
+void				save_pwd(void);
 
 #endif

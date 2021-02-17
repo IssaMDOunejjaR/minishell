@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 17:57:31 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/15 12:17:59 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/17 10:36:41 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void			execute_commands(t_cmd *cmd, char **tab)
 	while ((ret = get_command(cmd, tab)))
 	{
 		g_check = 1;
+		save_pwd();
 		if (check_built_in(cmd))
 			exec_built_in(cmd);
 		else

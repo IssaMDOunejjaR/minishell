@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 16:53:34 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/15 12:24:15 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/17 10:42:56 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,22 @@ char	*get_current_working_directory(void)
 		cwd = ft_strdup(tmp[table_len_2d(tmp) - 1]);
 	free_table(tmp);
 	return (cwd);
+}
+
+void	save_pwd(void)
+{
+	if (getcwd(NULL, 0) != NULL)
+	{
+		if (!g_prev_pwd)
+			free(g_prev_pwd);
+		g_prev_pwd = getcwd(NULL, 0);
+	}
+	else if (getcwd(NULL, 0) == NULL && g_prev_pwd != NULL)
+	{
+		if (!g_prev_pwd)
+			free(g_prev_pwd);
+		g_prev_pwd = ft_strdup(g_prev_pwd);
+	}
 }
 
 void	print_pwd(void)

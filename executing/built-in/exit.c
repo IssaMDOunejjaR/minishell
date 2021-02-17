@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 15:48:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/15 12:25:39 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/17 10:37:10 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static	void	free_and_exit(t_cmd *cmd)
 	free_commands(cmd);
 	if (g_old_cwd != NULL)
 		free(g_old_cwd);
+	if (!g_prev_pwd)
+		free(g_prev_pwd);
 	exit(g_error_value);
 }
 
