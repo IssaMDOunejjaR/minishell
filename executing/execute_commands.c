@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute_commands.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 17:57:31 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/17 10:36:41 by iounejja         ###   ########.fr       */
+<<<<<<< HEAD
+/*   Updated: 2021/02/17 15:32:23 by ychennaf         ###   ########.fr       */
+=======
+/*   Updated: 2021/02/18 17:37:58 by iounejja         ###   ########.fr       */
+>>>>>>> 3bbd984... fix a lot of things
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +36,9 @@ static	int		parent_process(t_cmd *cmd, pid_t id, int pipe_fd[2])
 	fd = 0;
 	if (cmd->type == END)
 	{
+		close(pipe_fd[0]);
 		waitpid(id, &status, 0);
 		signal_process(status);
-		while (waitpid(0, 0, 0) >= 0)
-			;
 	}
 	if (cmd->type != PIPE)
 		close(pipe_fd[0]);
@@ -51,6 +54,7 @@ static	void	child_process(t_cmd *cmd, int fd, int pipe_fd[2])
 		ft_putendl_fd(strerror(errno), 1);
 	if (cmd->type == PIPE)
 	{
+		close(pipe_fd[0]);
 		if (dup2(pipe_fd[1], 1) == -1)
 			ft_putendl_fd(strerror(errno), 1);
 	}
@@ -85,10 +89,7 @@ void			execute_commands(t_cmd *cmd, char **tab)
 	int		ret;
 
 	fd = 0;
-	g_i = 0;
-	g_t = 0;
-	g_prev_fd_read = -1;
-	g_prev_type = END;
+	init_exec();
 	while ((ret = get_command(cmd, tab)))
 	{
 		g_check = 1;
@@ -104,4 +105,10 @@ void			execute_commands(t_cmd *cmd, char **tab)
 		if (ret == 2)
 			break ;
 	}
+<<<<<<< HEAD
+	while (waitpid(0, 0, 0) > 0)
+=======
+	while (waitpid(0, 0, 0) >= 0)
+>>>>>>> 3bbd984... fix a lot of things
+		;
 }

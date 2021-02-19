@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 15:21:55 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/17 12:06:32 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/18 16:41:45 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,12 @@ void	exec_built_in(t_cmd *cmd)
 		exit_shell(cmd);
 }
 
-void	command_exe(t_cmd *cmd)
+void	command_exe(t_cmd *cmd, char *command)
 {
-	char	*command;
 	char	**args;
 
-	command = cmd->cmds->content;
 	args = get_args(cmd);
 	if (execve(command, args, g_env) != 0)
 		g_error_value = 1;
+	free_table(args);
 }

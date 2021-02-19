@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:42:06 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/17 12:06:44 by iounejja         ###   ########.fr       */
+<<<<<<< HEAD
+/*   Updated: 2021/02/19 10:08:04 by ychennaf         ###   ########.fr       */
+=======
+/*   Updated: 2021/02/18 17:37:54 by iounejja         ###   ########.fr       */
+>>>>>>> 3bbd984... fix a lot of things
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +119,7 @@ void				execute_commands(t_cmd *cmd, char **tab);
 void				check_command(t_cmd *cmd);
 void				check_if_file_executable(t_cmd *cmd);
 void				command_is_valid(t_cmd *cmd);
-void				command_exe(t_cmd *cmd);
+void				command_exe(t_cmd *cmd, char *command);
 int					check_built_in(t_cmd *cmd);
 void				exec_built_in(t_cmd *cmd);
 
@@ -130,6 +134,7 @@ void				free_commands(t_cmd *cmd);
 int					is_all_num(char *str);
 char				**get_args(t_cmd *cmd);
 
+void				init_exec(void);
 char				**init_global(void);
 int					find_env_var(char *env_var);
 char				*get_current_working_directory(void);
@@ -157,5 +162,6 @@ void				save_pwd(void);
 void				free_cd(char *oldpwd, char *tmp);
 char				*get_home_dir(char *str);
 int					create_and_check(t_cmd *cmd);
+int					final_exec(t_cmd *cmd, char *command);
 
 #endif

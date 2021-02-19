@@ -3,15 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+         #
+#    By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/09 14:57:18 by iounejja          #+#    #+#              #
-#    Updated: 2021/02/17 14:25:19 by ychennaf         ###   ########.fr        #
+#    Updated: 2021/02/18 18:09:39 by iounejja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-EXEC = minishell
-NAME = minishell.a
+CC = gcc
+FLAGS = -Wall -Wextra -Werror
+NAME = minishell
 SRCS = utils/ft_strcmp.c \
 		utils/lst_file_new.c \
 		utils/lst_file_add_back.c \
@@ -40,29 +41,31 @@ SRCS = utils/ft_strcmp.c \
 		executing/built-in/export.c \
 		executing/built-in/exit.c \
 		executing/built-in/echo.c \
-		executing/built-in/unset.c
+		executing/built-in/unset.c \
+		main.c
+
 OBJS = $(SRCS:.c=.o)
 
-all: $(NAME)
-	gcc -Wall -Wextra -Werror main.c $(NAME) -o $(EXEC)
+HEADERS = -I utils/libft -I .
 
-$(NAME): $(OBJS)
-		cd utils/libft && make bonus
-		ar rcs $(NAME) $(OBJS) utils/libft/*.o
+all : $(NAME)
 
-%.o: %.c
-	gcc -c -Wall -Wextra -Werror $< -o $@ -I .
+$(NAME): $(OBJS) | libft
+	$(CC) $(FLAGS) $(HEADERS) $(OBJS) utils/libft/libft.a -o $(NAME)
 
 clean:
-	rm -rf *.o
-	rm -rf utils/*.o
-	rm -rf parsing/*.o
-	rm -rf executing/*.o
-	rm -rf executing/built-in/*.o
-	cd utils/libft &&  make clean
+	cd utils/libft && $(MAKE) clean
+	rm -rf $(OBJS)
 
 fclean: clean
-		rm -rf $(NAME) $(EXEC)
-		cd utils/libft && make fclean
+	cd utils/libft && $(MAKE) fclean
+	rm -f $(NAME)
+
+libft:
+	@cd utils/libft && $(MAKE)
 
 re: fclean all
+
+%.o : %.c
+	$(CC) $(FLAGS) $(HEADERS) -c $< -o $@
+

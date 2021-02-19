@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 11:54:22 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/17 11:58:39 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/18 17:36:41 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,26 @@ char			*get_home_dir(char *str)
 	home[i] = '\0';
 	free(tmp);
 	return (home);
+}
+
+int				final_exec(t_cmd *cmd, char *command)
+{
+	struct stat		sb;
+	int				fd;
+
+	fd = open(command, O_RDONLY, 0666);
+	if (fd < 0)
+		return (0);
+	close(fd);
+	if (command)
+	{
+		if (stat(command, &sb) == 0 && sb.st_mode & S_IXUSR)
+			command_exe(cmd, command);
+		else
+			print_error(command, NULL, "Permission denied");
+		return (1);
+	}
+	return (0);
 }
 
 void			free_cd(char *oldpwd, char *tmp)

@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 17:17:00 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/17 11:59:50 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/18 16:49:44 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,13 @@ static	int		empty_path(t_cmd *cmd, char *tmp, char *oldpwd)
 	}
 	else
 		get_oldpwd(oldpwd);
+	if (ft_strcmp(cmd->cmds->content, ".") == 0)
+	{
+		tmp1 = getcwd(NULL, 0);
+		if (tmp1 == NULL)
+			print_error("cd", "error retrieving current directory", NULL);
+		free(tmp1);
+	}
 	if (g_error_value != 1 && ft_strcmp(cmd->cmds->content, "-") == 0)
 	{
 		tmp1 = getcwd(NULL, 0);
