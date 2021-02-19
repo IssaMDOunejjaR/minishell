@@ -6,7 +6,11 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 19:08:58 by ychennaf          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/02/14 11:54:19 by ychennaf         ###   ########.fr       */
+=======
+/*   Updated: 2021/02/19 18:20:18 by ychennaf         ###   ########.fr       */
+>>>>>>> 667522a... handling tabulation dzeb
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +37,7 @@ int		end_doll(char c)
 	char	*stop_char;
 
 	i = 0;
-	stop_char = " \"'$#%&()+,-./;:<>=[]\\^{}~|0";
+	stop_char = " \"'$#%&()+,-./;:<>=[]\\^{}~|0\t";
 	while (stop_char[i] != '\0')
 	{
 		if (stop_char[i] == c)
