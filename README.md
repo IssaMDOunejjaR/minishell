@@ -1,6 +1,6 @@
 # minishell
 
-## References:
+## - References:
 - https://n-pn.fr/t/2318-c--programmation-systeme-execve-fork-et-pipe
 - https://www.i3s.unice.fr/~tettaman/Classes/L2I/ProgSys/5_ProgSysLinuxTube.pdf
 - http://manpagesfr.free.fr/man/man2/stat.2.html
