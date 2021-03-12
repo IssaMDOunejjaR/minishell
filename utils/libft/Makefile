@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+         #
+#    By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 11:08:59 by iounejja          #+#    #+#              #
-#    Updated: 2021/02/18 18:52:11 by iounejja         ###   ########.fr        #
+#    Updated: 2021/03/12 14:42:07 by ychennaf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 		@ar rcs $(NAME) $(OBJ)
 
-%.o : %.c
+%.o : %.c libft.h
 	gcc -Wall -Wextra -Werror -c $< -o $@
 
 clean:

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+         #
+#    By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/09 14:57:18 by iounejja          #+#    #+#              #
-#    Updated: 2021/02/18 18:51:57 by iounejja         ###   ########.fr        #
+#    Updated: 2021/03/12 14:44:13 by ychennaf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,6 @@ libft:
 
 re: fclean all
 
-%.o : %.c
+%.o : %.c minishell.h utils/libft/libft.h
 	$(CC) $(FLAGS) $(HEADERS) -c $< -o $@
 
