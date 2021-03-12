@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 12:19:57 by ychennaf          #+#    #+#             */
-/*   Updated: 2021/02/19 18:18:17 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/03/12 11:45:51 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,9 @@ char			*fill_tab(char *line)
 	int		i;
 
 	i = g_i;
-	while (line[g_i] && (line[g_i] != ' ' && line[g_i] != '\t') && line[g_i] != '|'
-			&& line[g_i] != ';' && line[g_i] != '<' && line[g_i] != '>')
+	while (line[g_i] && (line[g_i] != ' ' && line[g_i] != '\t')
+			&& line[g_i] != '|' && line[g_i] != ';'
+			&& line[g_i] != '<' && line[g_i] != '>')
 	{
 		if (line[g_i] == '"' || line[g_i] == '\'')
 		{
