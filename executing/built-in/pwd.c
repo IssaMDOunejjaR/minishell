@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 16:53:34 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 17:06:14 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/17 11:54:47 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@ char	*get_current_working_directory(void)
 	char **tmp;
 
 	cwd = getcwd(NULL, 0);
+	if (cwd == NULL)
+		if (g_old_cwd != NULL)
+			cwd = ft_strdup(g_old_cwd);
+	if (g_old_cwd != NULL)
+		free(g_old_cwd);
+	g_old_cwd = ft_strdup(cwd);
+	if (cwd == NULL)
+		cwd = ft_strdup(g_old_cwd);
 	tmp = ft_split(cwd, '/');
 	free(cwd);
 	if (ft_strcmp(cwd, "/") == 0)
@@ -35,7 +43,7 @@ void	print_pwd(void)
 	g_error_value = 0;
 	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
-		print_error("pwd", cwd, NULL);
+		ft_putendl_fd(g_old_cwd, 1);
 	else
 		ft_putendl_fd(cwd, 1);
 	free(cwd);

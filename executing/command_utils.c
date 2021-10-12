@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 10:47:54 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 15:55:49 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/19 11:39:06 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,40 +28,40 @@ void	free_commands(t_cmd *cmd)
 	}
 }
 
-void	free_table(char **tab)
+int		export_check_more(char tmp, char *sc)
 {
-	int	i;
+	int i;
 
 	i = 0;
-	while (tab[i] != NULL)
+	while (sc[i] != '\0')
 	{
-		free(tab[i]);
+		if (tmp == sc[i])
+			return (1);
 		i++;
 	}
-	free(tab);
+	return (0);
 }
 
 int		export_check_special_carac(char *str)
 {
 	int		i;
-	int		j;
 	char	*sc;
 	char	**tmp;
 
 	tmp = ft_split(str, '=');
+	if (tmp[0] == NULL)
+	{
+		free_table(tmp);
+		return (1);
+	}
 	sc = "!#%&()*+,-./:?@[]^{}~";
 	i = 0;
 	while (tmp[0][i] != '\0')
 	{
-		j = 0;
-		while (sc[j] != '\0')
+		if (export_check_more(tmp[0][i], sc) == 1 || ft_isdigit(tmp[0][0]))
 		{
-			if (tmp[0][i] == sc[j])
-			{
-				free_table(tmp);
-				return (1);
-			}
-			j++;
+			free_table(tmp);
+			return (1);
 		}
 		i++;
 	}
@@ -77,6 +77,8 @@ int		unset_check_special_carac(char *str)
 
 	sc = "!#%&()*+,-./:=?@[]^{}~";
 	i = 0;
+	if (ft_isdigit(str[i]))
+		return (1);
 	while (str[i] != '\0')
 	{
 		j = 0;

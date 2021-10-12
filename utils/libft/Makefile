@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makfile                                            :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: iounejja <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 11:08:59 by iounejja          #+#    #+#              #
-#    Updated: 2019/11/06 12:57:52 by iounejja         ###   ########.fr        #
+#    Updated: 2021/03/12 14:42:07 by ychennaf         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,30 +44,25 @@ SRCS =	ft_memset.c \
 	  	ft_putchar_fd.c \
 	  	ft_putstr_fd.c \
 	  	ft_putendl_fd.c \
-	  	ft_putnbr_fd.c 
-
-B_SRCS =	ft_lstnew_bonus.c \
-			ft_lstadd_front_bonus.c \
-			ft_lstsize_bonus.c \
-			ft_lstlast_bonus.c \
-			ft_lstadd_back_bonus.c \
-			ft_lstdelone_bonus.c \
-			ft_lstclear_bonus.c \
-			ft_lstiter_bonus.c \
-			ft_lstmap_bonus.c
+	  	ft_putnbr_fd.c \
+		ft_lstnew_bonus.c \
+		ft_lstadd_front_bonus.c \
+		ft_lstsize_bonus.c \
+		ft_lstlast_bonus.c \
+		ft_lstadd_back_bonus.c \
+		ft_lstdelone_bonus.c \
+		ft_lstclear_bonus.c \
+		ft_lstiter_bonus.c \
+		ft_lstmap_bonus.c
 
 OBJ = $(SRCS:.c=.o)
-B_OBJ = $(B_SRCS:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-		ar rcs $(NAME) $(OBJ)
+		@ar rcs $(NAME) $(OBJ)
 
-bonus:	all $(B_OBJ)
-		ar rcs $(NAME) $(B_OBJ)
-
-%.o : %.c
+%.o : %.c libft.h
 	gcc -Wall -Wextra -Werror -c $< -o $@
 
 clean:

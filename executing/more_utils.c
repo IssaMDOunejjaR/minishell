@@ -3,10 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   more_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 10:58:33 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 16:01:02 by iounejja         ###   ########.fr       */
+<<<<<<< HEAD
+<<<<<<< HEAD
+/*   Updated: 2021/02/17 14:33:50 by ychennaf         ###   ########.fr       */
+=======
+/*   Updated: 2021/02/18 16:30:22 by iounejja         ###   ########.fr       */
+>>>>>>> 3bbd984... fix a lot of things
+=======
+/*   Updated: 2021/02/19 12:02:22 by iounejja         ###   ########.fr       */
+>>>>>>> 22fb315... minishell
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +43,9 @@ char	**get_args(t_cmd *cmd)
 {
 	int		i;
 	char	**args;
+	t_list	*tmp;
 
+	tmp = cmd->cmds;
 	args = malloc(sizeof(char*) * (ft_lstsize(cmd->cmds) + 1));
 	i = 0;
 	while (cmd->cmds != NULL)
@@ -45,6 +55,7 @@ char	**get_args(t_cmd *cmd)
 		i++;
 	}
 	args[i] = NULL;
+	cmd->cmds = tmp;
 	return (args);
 }
 

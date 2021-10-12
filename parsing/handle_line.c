@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 12:19:57 by ychennaf          #+#    #+#             */
-/*   Updated: 2021/02/13 16:46:48 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/03/12 11:45:51 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static	void	fill_tab2_2(char *line, char ***tab2)
 		else
 			*tab2 = tab_join(*tab2, ">");
 	}
-	else if (line[g_i] && line[g_i] != ' ')
+	else if (line[g_i] && (line[g_i] != ' ' && line[g_i] != '\t'))
 		*tab2 = tab_join_f(*tab2, fill_tab(line));
 	else
 		g_i++;
@@ -63,9 +63,9 @@ char			**fill_tab2(char *line)
 	tab2[0] = NULL;
 	while (line[g_i])
 	{
-		if (line[g_i] == ' ')
+		if (line[g_i] == ' ' || line[g_i] == '\t')
 			g_i = skip_spaces(line, g_i);
-		if (line[g_i] == '|')
+		else if (line[g_i] == '|')
 		{
 			g_i++;
 			tab2 = tab_join(tab2, "|");
@@ -87,8 +87,9 @@ char			*fill_tab(char *line)
 	int		i;
 
 	i = g_i;
-	while (line[g_i] && line[g_i] != ' ' && line[g_i] != '|'
-			&& line[g_i] != ';' && line[g_i] != '<' && line[g_i] != '>')
+	while (line[g_i] && (line[g_i] != ' ' && line[g_i] != '\t')
+			&& line[g_i] != '|' && line[g_i] != ';'
+			&& line[g_i] != '<' && line[g_i] != '>')
 	{
 		if (line[g_i] == '"' || line[g_i] == '\'')
 		{

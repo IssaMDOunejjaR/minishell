@@ -3,10 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:42:06 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/14 11:03:47 by iounejja         ###   ########.fr       */
+<<<<<<< HEAD
+<<<<<<< HEAD
+/*   Updated: 2021/02/19 10:08:04 by ychennaf         ###   ########.fr       */
+=======
+/*   Updated: 2021/02/18 17:37:54 by iounejja         ###   ########.fr       */
+>>>>>>> 3bbd984... fix a lot of things
+=======
+/*   Updated: 2021/03/12 14:44:28 by ychennaf         ###   ########.fr       */
+>>>>>>> e9a4d70... modifying Makefile
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +36,11 @@
 # include "utils/libft/libft.h"
 
 char				*g_cwd;
+char				*g_old_cwd;
 char				*g_old_pwd;
 char				*g_latest_cmd;
 char				**g_env;
+char				*g_prev_pwd;
 int					g_error_value;
 int					g_t;
 int					g_i;
@@ -113,7 +123,7 @@ void				execute_commands(t_cmd *cmd, char **tab);
 void				check_command(t_cmd *cmd);
 void				check_if_file_executable(t_cmd *cmd);
 void				command_is_valid(t_cmd *cmd);
-void				command_exe(t_cmd *cmd);
+void				command_exe(t_cmd *cmd, char *command);
 int					check_built_in(t_cmd *cmd);
 void				exec_built_in(t_cmd *cmd);
 
@@ -128,6 +138,7 @@ void				free_commands(t_cmd *cmd);
 int					is_all_num(char *str);
 char				**get_args(t_cmd *cmd);
 
+void				init_exec(void);
 char				**init_global(void);
 int					find_env_var(char *env_var);
 char				*get_current_working_directory(void);
@@ -150,5 +161,11 @@ void				get_latest_cmd(t_cmd *cmd);
 char				**split_export(char *str, char **tmp);
 char				**convert_env(void);
 int					get_write_append_read(t_cmd *cmd);
+void				signal_process(int status);
+void				save_pwd(void);
+void				free_cd(char *oldpwd, char *tmp);
+char				*get_home_dir(char *str);
+int					create_and_check(t_cmd *cmd);
+int					final_exec(t_cmd *cmd, char *command);
 
 #endif

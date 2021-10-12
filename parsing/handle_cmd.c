@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 12:00:23 by ychennaf          #+#    #+#             */
-/*   Updated: 2021/02/13 16:48:33 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/14 18:15:47 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int		size_q(char *line, int *i, char type)
 				l += size_q2(line, i, type);
 		}
 	}
+	(*i)++;
 	return (l);
 }
 

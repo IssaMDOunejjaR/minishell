@@ -3,14 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 17:10:03 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/13 17:06:02 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/19 11:36:30 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	init_exec(void)
+{
+	g_i = 0;
+	g_t = 0;
+	g_prev_fd_read = -1;
+	g_prev_type = END;
+}
+
+int		check_carac(char *str, char c)
+{
+	int i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	free_table(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i] != NULL)
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
 
 void	print_export(void)
 {
@@ -38,7 +73,7 @@ void	print_env(void)
 	while (g_env[i] != NULL)
 	{
 		tmp = ft_split(g_env[i], '=');
-		if (table_len_2d(tmp) > 1)
+		if (table_len_2d(tmp) > 1 || check_carac(g_env[i], '=') == 1)
 			ft_putendl_fd(g_env[i], 1);
 		free_table(tmp);
 		i++;
