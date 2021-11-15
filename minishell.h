@@ -6,15 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:42:06 by iounejja          #+#    #+#             */
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*   Updated: 2021/02/19 10:08:04 by ychennaf         ###   ########.fr       */
-=======
-/*   Updated: 2021/02/18 17:37:54 by iounejja         ###   ########.fr       */
->>>>>>> 3bbd984... fix a lot of things
-=======
 /*   Updated: 2021/03/12 14:44:28 by ychennaf         ###   ########.fr       */
->>>>>>> e9a4d70... modifying Makefile
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +109,7 @@ char				**tab_join_f(char **tab, char *line);
 char				*alloc_q(int *k, int *i, char *ret, char *line);
 int					check_backslash2(char *line, int *i, char type);
 int					lenght_digit(int n);
+char				*get_var_env(char *name);
 
 void				get_commands(t_cmd *cmd, char *line);
 void				execute_commands(t_cmd *cmd, char **tab);

@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 14:23:40 by ychennaf          #+#    #+#             */
-/*   Updated: 2021/02/13 12:11:50 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/19 12:06:21 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*fill_d2(char *tmp, int *i)
 	else if (ft_strcmp(tmp, "_") == 0)
 		return (ft_strdup(g_latest_cmd));
 	else
-		return (get_env_var(tmp));
+		return (get_var_env(tmp));
 }
 
 void	fill_ret(char *vl_env, char *ret, int *j)

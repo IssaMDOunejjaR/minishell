@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 18:17:54 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/19 11:08:17 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/19 12:25:48 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	command_is_valid(t_cmd *cmd)
 	char			*tmp2;
 
 	i = 0;
-	tmp = get_env_var("PATH");
+	tmp = get_var_env("PATH");
 	env_path = ft_split(tmp, ':');
 	free(tmp);
 	while (env_path[i] != NULL)

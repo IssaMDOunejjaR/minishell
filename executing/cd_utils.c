@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 11:54:22 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/18 17:36:41 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/19 12:15:54 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char			*get_home_dir(char *str)
 	int		j;
 	char	*tmp;
 
-	tmp = get_env_var("HOME");
+	tmp = get_var_env("HOME");
 	home = malloc(sizeof(char) * (len_home(str) + ft_strlen(tmp) + 1));
 	i = 0;
 	while (tmp[i] != '\0')

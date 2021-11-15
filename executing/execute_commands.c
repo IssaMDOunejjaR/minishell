@@ -6,15 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 17:57:31 by iounejja          #+#    #+#             */
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*   Updated: 2021/02/17 15:32:23 by ychennaf         ###   ########.fr       */
-=======
-/*   Updated: 2021/02/18 17:37:58 by iounejja         ###   ########.fr       */
->>>>>>> 3bbd984... fix a lot of things
-=======
-/*   Updated: 2021/02/19 12:06:21 by iounejja         ###   ########.fr       */
->>>>>>> 22fb315... minishell
+/*   Updated: 2021/02/19 12:25:46 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +101,6 @@ void			execute_commands(t_cmd *cmd, char **tab)
 		if (ret == 2)
 			break ;
 	}
-<<<<<<< HEAD
-	while (waitpid(0, 0, 0) > 0)
-=======
 	while (waitpid(0, 0, 0) >= 0)
->>>>>>> 3bbd984... fix a lot of things
 		;
 }

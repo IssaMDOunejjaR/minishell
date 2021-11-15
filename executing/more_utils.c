@@ -6,15 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 10:58:33 by iounejja          #+#    #+#             */
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*   Updated: 2021/02/17 14:33:50 by ychennaf         ###   ########.fr       */
-=======
-/*   Updated: 2021/02/18 16:30:22 by iounejja         ###   ########.fr       */
->>>>>>> 3bbd984... fix a lot of things
-=======
-/*   Updated: 2021/02/19 12:02:22 by iounejja         ###   ########.fr       */
->>>>>>> 22fb315... minishell
+/*   Updated: 2021/02/19 12:25:43 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +61,7 @@ char	**init_global(void)
 	g_latest_cmd = ft_strdup("minishell");
 	g_old_pwd = ft_strdup("");
 	g_env = change_env_var("OLDPWD");
-	tmp = get_env_var("SHLVL");
+	tmp = get_var_env("SHLVL");
 	shell_lvl = ft_atoi(tmp) + 1;
 	free(tmp);
 	tmp = ft_itoa(shell_lvl);

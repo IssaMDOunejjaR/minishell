@@ -6,7 +6,7 @@
 /*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 17:43:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/17 14:51:11 by ychennaf         ###   ########.fr       */
+/*   Updated: 2021/02/19 12:09:42 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char				*get_env_var(char *name)
 	while (g_env[i] != NULL)
 	{
 		tmp = ft_split(g_env[i], '=');
-		if (ft_strcmp(tmp[0], name) == 0)
+		if (ft_strcmp(tmp[0], name) == 0 && table_len_2d(tmp) >= 2)
 		{
 			value = ft_strdup(tmp[1]);
 			free_table(tmp);

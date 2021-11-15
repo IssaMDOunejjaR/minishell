@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychennaf <ychennaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 17:17:00 by iounejja          #+#    #+#             */
-/*   Updated: 2021/02/18 16:49:44 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/02/19 12:16:12 by ychennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void			change_directory(t_cmd *cmd)
 	if (ft_lstsize(cmd->cmds) > 1)
 		tmp = get_tmp(cmd);
 	else
-		tmp = get_env_var("HOME");
+		tmp = get_var_env("HOME");
 	if (empty_path(cmd, tmp, oldpwd) == 1)
 	{
 		free_cd(oldpwd, tmp);
